@@ -17,7 +17,6 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 });
 
 // Add a client for the logged in user to the client table in our database
- 
  router.post('/', rejectUnauthenticated, (req, res) => {
   console.log('/client POST route');
   console.log(req.body);
@@ -44,6 +43,25 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
     });
 });
 
+
+
+// Delete a client if it's something the logged in user added
+ router.delete('/:id', (req, res) => {
+    const query = `
+        DELETE FROM "client"
+        WHERE "client"."id"=$1;
+    `;
+    const sqlValues = [req.params.id]
+    console.log(query);
+  pool.query(query, sqlValues)
+    .then( result => {
+      res.sendStatus(202)
+    })
+    .catch(err => {
+      console.log('ERROR: DELETE request failed:', err);
+      res.sendStatus(500)
+    })
+  });
 
 
 

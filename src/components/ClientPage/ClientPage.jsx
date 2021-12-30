@@ -35,6 +35,12 @@ function ClientPage() {
         })
     }
 
+    function deleteClient(clientId) {
+        dispatch({
+          type: 'DELETE_CLIENT',
+          payload: clientId
+        })
+      }
 
 
   return (
@@ -61,8 +67,8 @@ function ClientPage() {
     <ul>
       {client.map((clientInfo) => {
         return (
-          <li key={clientInfo.id}>{clientInfo.name}
-          { clientInfo.user_id === user.id }</li> //keeps log of the user ID who added client in our Database
+          <li key={clientInfo.id}> {clientInfo.user_id === user.id && clientInfo.name}
+          { clientInfo.user_id === user.id && <button onClick={() => { deleteClient(clientInfo.id) }}>Delete</button>}</li> //keeps log of the user ID who added client in our Database
         )
       })}
     </ul>
