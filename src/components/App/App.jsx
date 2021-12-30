@@ -71,14 +71,12 @@ function App() {
 
 
           <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
+            // logged in shows ClientPage else shows LoginPage
             exact
-            path="/client"
+            path="/add_new_client"
           >
             <ClientPage />
           </ProtectedRoute>
-
-
 
 
           <Route

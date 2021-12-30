@@ -13,7 +13,7 @@ function AddNewClientButton(props) {
       // because it's styled differently depending on where it is used, the className
       // is passed to it from it's parents through React props
       className={props.className}
-      onClick={() => history.push('/ClientPage')}
+      onClick={() => history.push('/add_new_client')}
     >
       Add New Client
     </button>

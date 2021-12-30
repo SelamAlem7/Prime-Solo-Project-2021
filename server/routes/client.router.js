@@ -3,9 +3,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware')
 
-/**
- * Get all info about our client 
- */
+// Getting all info about our client 
  router.get('/', rejectUnauthenticated, (req, res) => {
   pool.query(`SELECT * FROM "client";`)
     .then((result) => {
@@ -18,11 +16,10 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
     });
 });
 
-/**
- * Add a client for the logged in user to the client table in our database
- */
+// Add a client for the logged in user to the client table in our database
+ 
  router.post('/', rejectUnauthenticated, (req, res) => {
-  console.log('/inside client POST route');
+  console.log('/client POST route');
   console.log(req.body);
   console.log('is authenticated?', req.isAuthenticated());
   console.log('user', req.user);
@@ -47,25 +44,7 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
     });
 });
 
-/**
- * Delete a client if it's something the logged in user added
- */
- router.delete('/:id', (req, res) => {
-  const query = `
-      DELETE FROM "client"
-      WHERE "client"."id"=$1;
-  `;
-  const sqlValues = [req.params.id]
-  console.log(query);
-pool.query(query, sqlValues)
-  .then( result => {
-    res.sendStatus(202)
-  })
-  .catch(err => {
-    console.log('ERROR: DELETE request failed:', err);
-    res.sendStatus(500)
-  })
-});
+
 
 
 
