@@ -1,5 +1,6 @@
 import React from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
+import AddClientButton from '../AddClientButton/AddClientButton';
 import {useSelector} from 'react-redux';
 
 function UserPage() {
@@ -7,8 +8,9 @@ function UserPage() {
   const user = useSelector((store) => store.user);
   return (
     <div className="container">
-      <h2>Welcome, {user.username}!</h2>
-      <p>Your ID is: {user.id}</p>
+      <h2>Welcome Team, {user.team_name}!</h2>
+      <AddClientButton />
+      {/* <p>You are caring for: {client.name}</p> */}
       <LogOutButton className="btn" />
     </div>
   );
