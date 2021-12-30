@@ -26,6 +26,7 @@ app.use(passport.session());
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/api/client', clientRouter);
+app.use('/api/tasks', taskRouter);
 
 
 
