@@ -20,7 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ClientPage from '../ClientPage/ClientPage';
-
+import TaskPage from '../TaskPage/TaskPage';
 import './App.css';
 
 function App() {
@@ -77,7 +77,15 @@ function App() {
           >
             <ClientPage />
           </ProtectedRoute>
-          
+
+          <ProtectedRoute
+            // logged in shows ClientPage else shows LoginPage
+            exact
+            path="/tasks"
+          >
+            <TaskPage />
+          </ProtectedRoute>
+
 
 
           <Route

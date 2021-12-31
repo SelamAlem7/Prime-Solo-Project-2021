@@ -25,22 +25,28 @@ function InfoPage() {
   return (
     <div className="container">
       <h2>List of Our Clients</h2>
+      
       <ul>
-        {client.map((clientInfo) => {
+        {client.map((client) => {
         return (
-          <li key={clientInfo.id}> {clientInfo.user_id === user.id && clientInfo.name}
+          <li key={client.id}> {client.user_id === user.id && client.name }
+        
+        
         <button
           type="button"
           onClick={() => {
-            history.push('/add_new_client');
-          }}
-        >
+            history.push('/ClientPage');
+          }}>
           Edit
         </button>
+
+
         </li> 
         )
       })}
       </ul>
+
+
     </div>
   );
 }

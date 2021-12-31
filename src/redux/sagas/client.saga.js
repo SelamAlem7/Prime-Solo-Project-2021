@@ -3,9 +3,11 @@ import axios from 'axios';
 
 function* fetchClient(action) {
   try {
-    const response = yield axios({
+    
+ const response = yield axios({
       method: 'GET',
-      url: '/api/client'
+      url: '/api/client',
+      data: action.payload
     })
     console.log(response.data)
     yield put({

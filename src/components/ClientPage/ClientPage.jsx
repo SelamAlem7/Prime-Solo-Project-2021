@@ -33,6 +33,8 @@ function ClientPage() {
             diagnosis_list: diagnosis
         }
         })
+        setName('');
+        setDiagnosis('');
     }
 
     function deleteClient(clientId) {

@@ -54,7 +54,7 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
     req.body.task,
     req.body.completed,
     req.body.completed_by,
-    req.body.client_id,
+    req.client_id,
     //req.user.id -- testing
   ];
   pool.query(sqlText, sqlValues)
