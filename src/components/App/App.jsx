@@ -77,6 +77,7 @@ function App() {
           >
             <ClientPage />
           </ProtectedRoute>
+          
 
 
           <Route
