@@ -19,22 +19,22 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 
 
 
-// // TESTING: GET route for specific client & their tasks
-//   // Make a query to get the specific info from the database
-//   // Pass in the req.params.id to select a client
-//   router.get('/:id', (req, res) => {
-//     const query = `SELECT "name", "diagnosis_list", "user_id" FROM "client" 
-//                     JOIN "tasks" ON "client"."id"="tasks"."client_id" 
-//                     WHERE client=$1`;
-//     pool.query(query,[req.params.id])
-//     .then( result => {
-//       res.send(result.rows);
-//     })
-//     .catch(err => {
-//       console.log('ERROR: Get all tasks & clients', err);
-//       res.sendStatus(500)
-//     })
-//   });
+// TESTING: GET route for specific client & their tasks
+  // Make a query to get the specific info from the database
+  // Pass in the req.params.id to select a client
+  router.get('/:id', (req, res) => {
+    const query = `SELECT "name", "diagnosis_list", "user_id" FROM "client" 
+                    JOIN "tasks" ON "client"."id"="tasks"."client_id" 
+                    WHERE client=$1`;
+    pool.query(query,[req.params.id])
+    .then( result => {
+      res.send(result.rows);
+    })
+    .catch(err => {
+      console.log('ERROR: Get all tasks & clients', err);
+      res.sendStatus(500)
+    })
+  });
 
 
 
@@ -46,15 +46,16 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
   console.log('user', req.user);
   const sqlText = `
     INSERT INTO "tasks"
-      ("task", "completed", "completed_by", client_id)
+      ( "client_id", "task", "completed_by", "completed" )
       VALUES
       ($1, $2, $3, $4);
   `;
   const sqlValues = [
+    req.client.id,
     req.body.task,
-    req.body.completed,
     req.body.completed_by,
-    req.client_id,
+    req.body.completed,
+    
     //req.user.id -- testing
   ];
   pool.query(sqlText, sqlValues)
@@ -90,7 +91,29 @@ pool.query(query, sqlValues)
 
 // Update an item if it's something the logged in user added
 router.put('/:id', (req, res) => {
- 
+  // console.log('req.params', req.params);
+  // console.log('req.body', req.body);
+  const taskToUpdate = req.params.id;
+  let currentCompletedStatus = req.body.currentCompletedStatus;
+  currentCompletedStatus = 'Y';
+  const sqlText = `
+    UPDATE "tasks"
+      SET "completed" = $1 
+      WHERE "id" = $2;
+  `;
+  const sqlValues = [
+    currentCompletedStatus,
+    taskToUpdate
+  ];
+
+  pool.query(sqlText, sqlValues)
+    .then((dbResult) => {
+      res.sendStatus(200);
+    })
+    .catch((dbErr) => {
+      console.error(dbErr);
+      res.sendStatus(500);
+    })
 });
 
 

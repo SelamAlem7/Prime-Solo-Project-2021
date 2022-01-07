@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 
 function RegisterForm() {
   const [team_name, setTeam_name] = useState('');
@@ -7,6 +9,12 @@ function RegisterForm() {
   const [password, setPassword] = useState('');
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
+
+
+  // useEffect(() => {
+  //   dispatch({ type: 'REGISTER' })
+  // }, []) 
+
 
   const registerUser = (event) => {
     event.preventDefault();
@@ -19,6 +27,9 @@ function RegisterForm() {
         team_name: team_name
       },
     });
+    setTeam_name(''),
+    setUsername('');
+    setPassword('')
   }; // end registerUser
 
   return (
@@ -35,6 +46,7 @@ function RegisterForm() {
           <input
             type="text"
             name="team_name"
+            id="team_name"
             value={team_name}
             required
             onChange={(event) => setTeam_name(event.target.value)}
@@ -48,6 +60,7 @@ function RegisterForm() {
           <input
             type="text"
             name="username"
+            id="username"
             value={username}
             required
             onChange={(event) => setUsername(event.target.value)}
@@ -60,6 +73,7 @@ function RegisterForm() {
           <input
             type="password"
             name="password"
+            id="password"
             value={password}
             required
             onChange={(event) => setPassword(event.target.value)}

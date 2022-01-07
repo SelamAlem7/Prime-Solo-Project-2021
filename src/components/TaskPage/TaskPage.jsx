@@ -3,6 +3,7 @@ import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import './TaskPage.css';
 
 
 function TaskPage() {
@@ -43,9 +44,24 @@ function TaskPage() {
 
   }
 
+  function deleteTask(tasks) {
+    dispatch({
+      type: 'DELETE_TASK',
+      payload: tasks
+    })
+  }
+
+  // function handleMarkCompleted(){
+  //   const taskToMark = $(this).data('id');
+  //   const currentCompletedStatus = $(this).data('completed-status');
+
+
+  // }
+
+
   return(
     <div> 
-      <h1> Task List for {client.name}: </h1>
+      <h1> Task List for {client.name} </h1>
         <form onSubmit={onAddTask}>
           <input
             placeholder="Add A Task To Complete"
@@ -53,7 +69,8 @@ function TaskPage() {
             onChange={(event) => setTask(event.target.value)}
             />
           <input
-            placeholder="Mark as Completed"
+            placeholder="Type F for new tasks"
+            // type="checkbox"
             value={completed}
             onChange={(event) => setCompleted(event.target.value)}
             />
@@ -67,10 +84,10 @@ function TaskPage() {
 
         <h2>Clients Task List:</h2>
         <ul>
-        {tasks.map((tasks, client) => {
+        {tasks.map((tasks) => {
           return (
-            <li> {tasks.client_id === client.id}  
-            { tasks.client === client.id}</li>
+            <li className="taskList" key={tasks.id}> {tasks.task} ➡
+            { tasks.client_id === client.id && <button className="deleteBtn" onClick={() => { deleteTask(tasks.id) }}>Delete</button>}</li> //keeps log of the user ID who added client in our Database
           )
         })}
       </ul>

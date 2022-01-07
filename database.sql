@@ -24,3 +24,18 @@ CREATE TABLE "tasks" (
     "completed_by" VARCHAR (255),
     "client_id" INT REFERENCES "client"
 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

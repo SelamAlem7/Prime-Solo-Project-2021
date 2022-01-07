@@ -24,7 +24,7 @@ function InfoPage() {
 
   return (
     <div className="container">
-      <h2>List of Our Clients</h2>
+      <h2>List of Your Clients</h2>
       
       <ul>
         {client.map((client) => {
@@ -35,7 +35,7 @@ function InfoPage() {
         <button
           type="button"
           onClick={() => {
-            history.push('/ClientPage');
+            history.push('/add_new_client');
           }}>
           Edit
         </button>

@@ -22,6 +22,8 @@ function* registerUser(action) {
   }
 }
 
+
+
 function* registrationSaga() {
   yield takeLatest('REGISTER', registerUser);
 }

@@ -14,7 +14,7 @@ function Nav() {
 
     <div className="nav">
       <Link to="/home">
-      <img className="img" src={logo}/>
+      <img className="logo" src={logo}/>
       <h2 className="nav-title">CARE TEAM©</h2>
       </Link>
 
@@ -38,7 +38,7 @@ function Nav() {
             </Link>
 
             <Link className="navLink" to="/our_clients">
-              Our Clients
+              Your Clients
             </Link>
 
             <LogOutButton className="navLink" />

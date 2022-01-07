@@ -37,6 +37,8 @@ function ClientPage() {
         setDiagnosis('');
     }
 
+    
+
     function deleteClient(clientId) {
         dispatch({
           type: 'DELETE_CLIENT',

@@ -4,10 +4,7 @@ import AddNewClientButton from '../AddNewClientButton/AddNewClientButton';
 import {useSelector, useDispatch} from 'react-redux';
 import { useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
-
-
-
-
+import './UserPage.css';
 
 
 function UserPage() {
@@ -30,11 +27,11 @@ function UserPage() {
       <ul>
       {client.map((clientInfo) => {
         return (
-          <li key={clientInfo.id}> {clientInfo.user_id === user.id && clientInfo.name}
+          <li key={clientInfo.id}>
           { clientInfo.user_id === user.id }
-          <button onClick={() => {
+          <button className="taskButton" onClick={() => {
             history.push('/tasks');
-          }}>Go To Task List For {clientInfo.name}</button></li> //keeps log of the user ID who added client in our Database
+          }}>Task List For {clientInfo.name}</button></li> //keeps log of the user ID who added client in our Database
         ) //test out conditional rendering /if statement to show clients belonging to users that added them
       })}
     </ul>

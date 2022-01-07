@@ -1,4 +1,5 @@
 import React from 'react';
+import './AboutPage.css';
 
 // This is one of our simplest components
 // It doesn't have local state,
@@ -9,7 +10,11 @@ function AboutPage() {
   return (
     <div className="container">
       <div>
-        <p>This about page is for anyone to read!</p>
+        <p>The more support for your loved ones, the merrier!</p>
+        <p>We understand the importance of caring for those you love. With our person centered app, our mission is to empower the communication between
+          those involved in caring for an individual in need. With a shared account in mind, 
+          all your needs to meet theirs is in one place.
+        </p>
       </div>
     </div>
   );
