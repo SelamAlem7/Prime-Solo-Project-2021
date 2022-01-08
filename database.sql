@@ -19,11 +19,13 @@ CREATE TABLE "client" (
 
 CREATE TABLE "tasks" (
     "id" SERIAL PRIMARY KEY,
+    "client_id" INT REFERENCES "client",
     "task" VARCHAR (255) NOT NULL,
-    "completed" BOOLEAN,
     "completed_by" VARCHAR (255),
-    "client_id" INT REFERENCES "client"
+    "completed" VARCHAR (1)
 );
+
+
 
 
 
