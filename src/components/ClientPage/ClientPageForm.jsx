@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 
-function ClientPage() {
+function ClientPageForm() {
 
   const dispatch = useDispatch();
 
@@ -54,11 +54,17 @@ function ClientPage() {
 
     <h1> Add a New Client: </h1>
     <form onSubmit={onAddClient}>
+
+      New Clients Name: 
       <input
-        placeholder="Enter Clients Name"
+        placeholder="New Clients Name"
         value={name}
         onChange={(event) => setName(event.target.value)}
       />
+
+      <p>
+List out clients diagnosis:</p>
+
       <input
         placeholder="List Clients Diagnosis"
         value={diagnosis}
@@ -71,8 +77,10 @@ function ClientPage() {
     <ul>
       {client.map((clientInfo) => {
         return (
-          <li key={clientInfo.id}> {clientInfo.user_id === user.id && clientInfo.name}
-          { clientInfo.user_id === user.id && <button onClick={() => { deleteClient(clientInfo.id) }}>Delete</button>}</li> //keeps log of the user ID who added client in our Database
+          <li key={clientInfo.id}> 
+          {clientInfo.name}
+          {clientInfo.diagnosis_list}
+          <button onClick={() => { deleteClient(clientInfo.id) }}>Delete</button> </li> //keeps log of the user ID who added client in our Database
         )
       })}
     </ul>
@@ -84,4 +92,4 @@ function ClientPage() {
   );
 }
 
-export default ClientPage;
+export default ClientPageForm;

@@ -19,10 +19,9 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import ClientPage from '../ClientPage/ClientPage';
-import TaskPage from '../TaskPage/TaskPage';
+import ClientPageForm from '../ClientPage/ClientPageForm';
+import TaskPageForm from '../TaskPage/TaskPageForm';
 import './App.css';
-
 
 function App() {
   const dispatch = useDispatch();
@@ -76,7 +75,7 @@ function App() {
             exact
             path="/add_new_client"
           >
-            <ClientPage />
+            <ClientPageForm />
           </ProtectedRoute>
 
           <ProtectedRoute
@@ -84,7 +83,7 @@ function App() {
             exact
             path="/tasks"
           >
-            <TaskPage />
+            <TaskPageForm />
           </ProtectedRoute>
 
 
