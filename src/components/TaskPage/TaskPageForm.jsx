@@ -20,9 +20,9 @@ function TaskPageForm() {
 
 
   //on page load:
-  useEffect(() => {
-    dispatch({ type: 'FETCH_TASKS' })
-  }, [])
+  // useEffect(() => {
+  //   dispatch({ type: 'FETCH_TASKS' })
+  // }, [])
 
 
   return(

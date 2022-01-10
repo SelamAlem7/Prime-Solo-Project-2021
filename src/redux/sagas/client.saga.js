@@ -14,14 +14,14 @@ function* fetchAllClients() {
 // Get the specified movie
 function* fetchThisClient(action) {
   try {
-      const clients = yield axios.get(`/api/client/${action.payload}`);
-      console.log('fetch this client:', action.payload);
+      const response = yield axios.get(`/api/client/${action.payload}`);
+      console.log('Inside fetch this client:', action.payload);
       yield put({ 
         type: 'SET_CLIENT', 
-        data: action.payload
-        // payload: clients.data 
-      });
-    } catch { console.log('fetchThisClient error')}       
+        payload: response.data
+      }); //this works and grabs the client 
+    } catch { console.log('fetchThisClient error')}  
+
 }
 
 // // Get the specified client

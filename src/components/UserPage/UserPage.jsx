@@ -6,6 +6,7 @@ import { useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import './UserPage.css';
 import { Button, Card, CardActionArea, CardMedia, Typography, CardContent } from '@material-ui/core';
+import tasksSaga from '../../redux/sagas/tasks.saga';
 
 
 
@@ -22,11 +23,18 @@ function UserPage() {
   }, [])
 
   const seeClientsTask = (client) => {
-    history.push('/tasks');
+   console.log(client.id);
     dispatch({
-      type: 'FETCH_THIS_CLIENT',
+      type: 'FETCH_THIS_TASK',
       payload: client.id
     })
+    history.push('/tasks');
+
+    // dispatch({
+    //   type: 'FETCH_THIS_TASK',
+    //   payload: tasks.id
+    // })
+    
   }
 
 

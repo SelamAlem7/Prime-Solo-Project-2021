@@ -22,19 +22,19 @@ router.get('/', (req, res) => {
   // Make a query to get the specific info from the database
   // Pass in the req.params.id to select a client
   router.get('/:id', (req, res) => {
-    const showClickedClientsTask = req.params.id;
-    const query = `SELECT * FROM "tasks"
+    const selectedTask = req.params.id;
+    const sqlText = `SELECT * FROM "tasks"
                       JOIN "client" 
-                        ON "tasks"."client_id"="client"."id"=
+                        ON "tasks"."client_id"="client"."id"
                           WHERE "client_id"=$1`;
 
-    const sqlValues = [showClickedClientsTask]
+    const sqlValues = [selectedTask]
     pool.query(sqlText,sqlValues)
     .then( result => {
       res.send(result.rows);
     })
   .catch(err => {
-      console.log('ERROR: Getting tasks for client', err);
+      console.log('ERROR: inside get task router by id', err);
       res.sendStatus(500)
     })
   });

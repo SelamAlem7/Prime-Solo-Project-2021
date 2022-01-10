@@ -7,7 +7,7 @@ function* fetchAllTasks() {
   // get all movies from the DB
   try {
       const tasks = yield axios.get('/api/tasks');
-      console.log('get all:', tasks.data);
+      console.log('inside fetchAllTasks saga:', tasks.data);
       yield put({ type: 'SET_TASKS', payload: tasks.data });
   } catch {
       console.log('get all tasks error');
@@ -15,27 +15,18 @@ function* fetchAllTasks() {
 }
 
 
-  function* fetchThisTask(action) {
-    try {
-        const tasks = yield axios.get(`/api/tasks/${action.payload}`);
-        console.log('get all:', action.payload);
-        yield put({ type: 'SET_TASKS', payload: tasks.data });
-    } catch {
-        console.log('get all error');
-    }       
+function* fetchThisTask(action) {
+  try {
+      const response = yield axios.get(`/api/tasks/${action.payload}`);
+      console.log('Inside fetch this task:', action.payload);
+      yield put({ 
+        type: 'SET_TASKS', 
+        payload: response.data
+      }); //this works and grabs the task 
+    } catch { console.log('fetchThisTasks error')}  
+
 }
-
-
-
-  // function* addTasks(action) {
-  //   console.log('addTasks action:', action);
-  //   const response = yield axios({
-  //     method: 'POST',
-  //     url: '/api/tasks',
-  //     data: action.payload
-  //   })
-  //   yield put({ type: 'FETCH_TASKS' })
-  // } 
+ 
 
 
   function* addTasks(action) {
