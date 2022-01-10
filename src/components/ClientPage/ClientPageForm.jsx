@@ -15,8 +15,7 @@ function ClientPageForm() {
 
     //THESE ARE LOCAL STATES TO GRAB USERS ENTRY
     const [name, setName] = useState('');
-    const [diagnosis, setDiagnosis] = useState('');
-
+    const[id, setId] = useState('')
 
     // TO RUN ON PAGE LOAD
     useEffect(() => {
@@ -29,12 +28,10 @@ function ClientPageForm() {
         dispatch({
         type: 'ADD_CLIENT',
         payload: {
-            name: name,
-            diagnosis_list: diagnosis
+            name: name
         }
         })
         setName('');
-        setDiagnosis('');
     }
 
     
@@ -62,15 +59,7 @@ function ClientPageForm() {
         onChange={(event) => setName(event.target.value)}
       />
 
-      <p>
-List out clients diagnosis:</p>
-
-      <input
-        placeholder="List Clients Diagnosis"
-        value={diagnosis}
-        onChange={(event) => setDiagnosis(event.target.value)}
-      />
-      <button>Add Client</button>
+    <button>Add Client</button>
     </form>
 
     <h2>Client</h2>
@@ -79,7 +68,6 @@ List out clients diagnosis:</p>
         return (
           <li key={clientInfo.id}> 
           {clientInfo.name}
-          {clientInfo.diagnosis_list}
           <button onClick={() => { deleteClient(clientInfo.id) }}>Delete</button> </li> //keeps log of the user ID who added client in our Database
         )
       })}

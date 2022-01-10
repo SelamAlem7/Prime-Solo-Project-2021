@@ -1,28 +1,32 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 
-function* fetchClient(action) {
+function* fetchAllClients() {
   try {
-    const config = {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    };
-
-    // the config includes credentials which
-    // allow the server session to recognize the user
-    // If a user is logged in, this will return their information
-    // from the server session (req.user)
-    const response = yield axios.get('/api/client', config);
-
-    // now that the session has given us a user object
-    // with an id and username set the client-side user object to let
-    // the client-side code know the user is logged in
-    yield put({ type: 'SET_CLIENT', payload: response.data });
+    const clients = yield axios.get('/api/client');
+    yield put({ type: 'SET_CLIENT', payload: clients.data });
   } catch (error) {
-    console.log('User get request failed', error);
+    console.log('fetchAllClients error', error);
   }
-
 }
+
+
+// Get the specified movie
+function* fetchThisClient(action) {
+  try {
+      const clients = yield axios.get(`/api/client/${action.payload}`);
+      console.log('fetch this client:', action.payload);
+      yield put({ 
+        type: 'SET_CLIENTS', 
+        payload: clients.data 
+      });
+    } catch { console.log('fetchThisClient error')}       
+}
+
+
+
+
+
 
 function* addClient(action) {
   console.log('addClient action:', action);
@@ -34,6 +38,8 @@ function* addClient(action) {
   yield put({ type: 'FETCH_CLIENT' })
 }
 
+
+
 function* deleteClient(action) {
   console.log('deleteClient action:', action);
   const response = yield axios({
@@ -44,8 +50,12 @@ function* deleteClient(action) {
 }
 
 
+
+
+
 function* clientSaga() {
-  yield takeEvery('FETCH_CLIENT', fetchClient);
+  yield takeEvery('FETCH_CLIENT', fetchAllClients);
+  yield takeEvery('FETCH_THIS_CLIENT', fetchThisClient);
   yield takeEvery('ADD_CLIENT', addClient);
   yield takeEvery('DELETE_CLIENT', deleteClient);
 }

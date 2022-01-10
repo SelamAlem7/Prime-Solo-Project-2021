@@ -5,36 +5,52 @@ import {useSelector, useDispatch} from 'react-redux';
 import { useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import './UserPage.css';
+import { Button, Card, CardActionArea, CardMedia, Typography, CardContent } from '@material-ui/core';
+
 
 
 function UserPage() {
   const dispatch = useDispatch();
   const history = useHistory();
-  // this component doesn't do much to start, just renders some user reducer info to the DOM
+
   const user = useSelector((store) => store.user);
   const client = useSelector((store) => store.client)
 
   // TO RUN ON PAGE LOAD
   useEffect(() => {
     dispatch({ type: 'FETCH_CLIENT' })
-}, [])
+  }, [])
+
+  const seeClientsTask = (client) => {
+    history.push('/tasks');
+    dispatch({
+      type: 'FETCH_THIS_CLIENT',
+      payload: client.id
+    })
+  }
+
 
 
   return (
     <div className="container">
       <h2>Welcome Team, {user.team_name}!</h2>
       <h3>Here are your clients:</h3>
-      <ul>
+      <section>
       {client.map((clientInfo) => {
         return (
-          <li key={clientInfo.id}>
-          { clientInfo.user_id === user.id }
-          <button className="taskButton" onClick={() => {
-            history.push('/tasks');
-          }}>Task List For {clientInfo.name}</button></li> //keeps log of the user ID who added client in our Database
-        ) //test out conditional rendering /if statement to show clients belonging to users that added them
+
+          <Card className="taskButton" key={clientInfo.id} onClick={e => seeClientsTask(client)} sx={{ maxWidth: 345 }}>
+             Task List For
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {clientInfo.name}
+            </Typography>
+          </CardContent>
+          </Card>
+
+        ) 
       })}
-    </ul>
+    </section>
 
       <AddNewClientButton className="btn"  />
       {/* <p>You are caring for: {client.name}</p> */}

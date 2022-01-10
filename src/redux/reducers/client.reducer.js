@@ -1,3 +1,4 @@
+// Used to store all movies form the server
 const client = (state = [], action) => {
     switch (action.type) {
       case 'SET_CLIENT':
@@ -8,5 +9,6 @@ const client = (state = [], action) => {
         return state;
     }
   }
+
   
   export default client;

@@ -3,35 +3,38 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware')
 
-// Get all of the items on the clients task list
-
- router.get('/', rejectUnauthenticated, (req, res) => {
-  pool.query(`SELECT * FROM "tasks";`)
-    .then((result) => {
-      console.log(result.rows);
-      res.send(result.rows);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.sendStatus(500);
-    });
-});
-
-
-
-// TESTING: GET route for specific client & their tasks
-  // Make a query to get the specific info from the database
-  // Pass in the req.params.id to select a client
-  router.get('/:id', (req, res) => {
-    const query = `SELECT "name", "diagnosis_list", "user_id" FROM "client" 
-                    JOIN "tasks" ON "client"."id"="tasks"."client_id" 
-                    WHERE client=$1`;
-    pool.query(query,[req.params.id])
+// Get all tasks
+router.get('/', (req, res) => {
+  const query = `SELECT * FROM "tasks"`;
+  pool.query(query)
     .then( result => {
       res.send(result.rows);
     })
     .catch(err => {
-      console.log('ERROR: Get all tasks & clients', err);
+      console.log('ERROR: Getting all tasks', err);
+      res.sendStatus(500)
+    })
+});
+
+
+
+// 'GET' route for a specific task belonging to a specific client
+  // Make a query to get the specific info from the database
+  // Pass in the req.params.id to select a client
+  router.get('/:id', (req, res) => {
+    const showClickedClientsTask = req.params.id;
+    const query = `SELECT * FROM "tasks"
+                      JOIN "client" 
+                        ON "tasks"."client_id"="client"."id"=
+                          WHERE "client_id"=$1`;
+
+    const sqlValues = [showClickedClientsTask]
+    pool.query(sqlText,sqlValues)
+    .then( result => {
+      res.send(result.rows);
+    })
+  .catch(err => {
+      console.log('ERROR: Getting tasks for client', err);
       res.sendStatus(500)
     })
   });

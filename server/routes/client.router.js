@@ -16,6 +16,27 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
     });
 });
 
+
+//Getting client by id:
+router.get('/:id', (req, res) => {
+  const selectedClient = req.params.id;
+  //we will then get all movies with details and genre included using JOIN query
+  const sqlText = `
+  SELECT * FROM "client"
+    JOIN "task"
+      ON "client"."id"="tasks"."client_id"
+        WHERE "client_id"=$1;`;
+  const sqlValues = [selectedClient]
+  pool.query(sqlText,sqlValues)
+  .then( result => {
+    res.send(result.rows);
+  })
+.catch(err => {
+    console.log('ERROR: Getting movie details', err);
+    res.sendStatus(500)
+  })
+});
+
 // Add a client for the logged in user to the client table in our database
  router.post('/', rejectUnauthenticated, (req, res) => {
   console.log('/client POST route');
@@ -24,13 +45,12 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
   console.log('user', req.user);
   const sqlText = `
     INSERT INTO "client"
-      ("name", "diagnosis_list", "user_id")
+      ("name","user_id")
       VALUES
-      ($1, $2, $3);
+      ($1, $2 );
   `;
   const sqlValues = [
     req.body.name,
-    req.body.diagnosis_list,
     req.user.id
   ];
   pool.query(sqlText, sqlValues)

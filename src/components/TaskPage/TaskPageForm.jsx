@@ -28,6 +28,14 @@ function TaskPageForm() {
     dispatch({ type: 'FETCH_TASKS' })
   }, [])
 
+  const seeThisTask = (task) => {
+    history.push('/tasks');
+    dispatch({
+        type: 'FETCH_THIS_TASK',
+        payload: client.id
+    })
+}
+
   const onAddTask= (event) => {
     event.preventDefault();
     dispatch({
@@ -100,7 +108,7 @@ function TaskPageForm() {
           {task.task}
           {task.completed_by}
           {task.completed}
-          <button onClick={() => { deleteClient(clientInfo.id) }}>Delete</button> </li> //keeps log of the user ID who added client in our Database
+          <button onClick={() => { deleteTask(task.id) }}>Delete</button> </li> //keeps log of the user ID who added client in our Database
         )
       })}
     </ul>
