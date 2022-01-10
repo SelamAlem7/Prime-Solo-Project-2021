@@ -24,16 +24,16 @@ function* fetchThisClient(action) {
     } catch { console.log('fetchThisClient error')}       
 }
 
-// Get the specified client
-function* fetchThisClient(action) {
-  console.log('fetch this client action:', action);
-  const response = yield axios({
-    method: 'GET',
-    url: `api/client/${action.payload}`,
-    // data: action.payload
-  })
-  yield put({ type: 'SET_CLIENT' })       
-}
+// // Get the specified client
+// function* fetchThisClient(action) {
+//   console.log('fetch this client action:', action);
+//   const response = yield axios({
+//     method: 'GET',
+//     url: `api/client/${action.payload}`,
+//     // data: action.payload
+//   })
+//   yield put({ type: 'SET_CLIENT' })       
+// }
 
 
 
