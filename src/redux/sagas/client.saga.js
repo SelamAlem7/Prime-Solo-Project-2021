@@ -17,12 +17,23 @@ function* fetchThisClient(action) {
       const clients = yield axios.get(`/api/client/${action.payload}`);
       console.log('fetch this client:', action.payload);
       yield put({ 
-        type: 'SET_CLIENTS', 
-        payload: clients.data 
+        type: 'SET_CLIENT', 
+        data: action.payload
+        // payload: clients.data 
       });
     } catch { console.log('fetchThisClient error')}       
 }
 
+// Get the specified client
+function* fetchThisClient(action) {
+  console.log('fetch this client action:', action);
+  const response = yield axios({
+    method: 'GET',
+    url: `api/client/${action.payload}`,
+    // data: action.payload
+  })
+  yield put({ type: 'SET_CLIENT' })       
+}
 
 
 

@@ -23,7 +23,7 @@ router.get('/:id', (req, res) => {
   //we will then get all movies with details and genre included using JOIN query
   const sqlText = `
   SELECT * FROM "client"
-    JOIN "task"
+    JOIN "tasks"
       ON "client"."id"="tasks"."client_id"
         WHERE "client_id"=$1;`;
   const sqlValues = [selectedClient]
@@ -32,7 +32,7 @@ router.get('/:id', (req, res) => {
     res.send(result.rows);
   })
 .catch(err => {
-    console.log('ERROR: Getting movie details', err);
+    console.log('ERROR: Getting clicked client task', err);
     res.sendStatus(500)
   })
 });

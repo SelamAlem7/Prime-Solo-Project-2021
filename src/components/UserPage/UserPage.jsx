@@ -36,14 +36,14 @@ function UserPage() {
       <h2>Welcome Team, {user.team_name}!</h2>
       <h3>Here are your clients:</h3>
       <section>
-      {client.map((clientInfo) => {
+      {client.map((client) => {
         return (
 
-          <Card className="taskButton" key={clientInfo.id} onClick={e => seeClientsTask(client)} sx={{ maxWidth: 345 }}>
+          <Card className="taskButton" key={client.id} onClick={e => seeClientsTask(client)} sx={{ maxWidth: 345 }}>
              Task List For
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {clientInfo.name}
+              {client.name}
             </Typography>
           </CardContent>
           </Card>
