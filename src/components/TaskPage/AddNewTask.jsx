@@ -3,111 +3,127 @@ import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Card, CardActionArea, CardMedia, Typography, CardContent } from "@material-ui/core";
 import './TaskPage.css';
 
 
 
-function TaskPageForm() {
+function AddNewTask() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const client = useSelector((store) => store.client)
-
+   // REDUX REDUCER
+   const tasks = useSelector((store) => store.tasks)
 
 
   //LOCAL STATES
-  const [NewTask, setNewTask] = useState('');
-  const [completedBy, setCompletedBy] = useState(0);
-  const [completed, setCompleted] = useState(0);
-  const [clientId, setClientId] = useState(0);
- 
-
-  const handleNewTask = (event) => {
-    setNewTask(event);
-}
-
-const handleCompletedBy = (event) => {
-    setCompletedBy(event);
-}
-
-const handleCompleted = (event) => {
-    setCompleted(event);
-}
-
-const handleClientId = (event) => {
-    setClientId(event);
-}
+  const [task, setTask] = useState('');
+  const [completedBy, setCompletedBy] = useState('');
+  const [completed, setCompleted] = useState('');
+  
 
 
+
+//   //on page load:
+//   useEffect(() => {
+//     dispatch({ type: 'FETCH_TASKS' })
+//   }, [])
 
   const onAddTask= (event) => {
     event.preventDefault();
     dispatch({
       type: 'ADD_TASKS',
       payload: {
+        client_id: client.id,
         task: task,
         completed_by: completedBy,
-        completed: completed,
-        client_id: client.id
+        completed: completed
       }
     })
-    setNewTask('');
-    setCompletedBy('');
+    setTask('');
     setCompleted('');
-    setClientId('');
-    history.goBack();
+    setCompletedBy('');
   }
 
+  function deleteTask(tasks) {
+    dispatch({
+      type: 'DELETE_TASK',
+      payload: tasks
+    })
+  }
+
+  // function handleMarkCompleted(){
+  //   const taskToMark = $(this).data('id');
+  //   const currentCompletedStatus = $(this).data('completed-status');
+
+
+  // }
 
 
   return(
+      
     <div>
-    <h1> Task List for {client[0].name} </h1>
+
+    
 
     <form onSubmit={onAddTask}>
+        <td>
         <input
           type="text"
           required="required"
           placeholder="Enter a Task..."
           value={task}
-          onChange={(event) => handleNewTask(event.target.value)}
+          onChange={(event) => setTask(event.target.value)}
         />
+        </td>
 
         <input
           type="text"
           required="required"
           placeholder="Team Member's Name..."
           value={completedBy}
-          onChange={(event) => handleCompletedBy(event.target.value)}
+          onChange={(event) => setCompletedBy(event.target.value)}
         />
 
         <label for="completed">Is this Task Completed?</label>
-        <select onChange={(event) => handleCompleted(event.target.value)}>
+        <select onChange={(event) => setCompleted(event.target.value)}>
             <option value="">Yes</option>
             <option value="">No</option>
         </select>
 
-
         <button>Add Task</button>
-        
+
     </form>
 
 
+
     <h2>Task List:</h2>
-    <ul>
+
+    <table>
+
+    <thead>
+        <tr>
+            <th>Task:</th>
+            <th>Completed?</th>
+            <th>Completed By:</th>
+        </tr>
+    </thead>
+
+    <tbody>
       {tasks.map((task) => {
         return (
-          <li key={task.id}> 
-          {task.task}
-          {task.completed_by}
-          {task.completed}
-          <button onClick={() => { deleteTask(task.id) }}>Delete</button> </li> //keeps log of the user ID who added client in our Database
+          <tr key={task.id}> 
+          <td>{task.task}</td>
+          <td>{task.completed_by}</td>
+          <td>{task.completed}</td>
+          </tr> //keeps log of the user ID who added client in our Database
         )
       })}
-    </ul>
+    </tbody>
+    </table>
+
+    <button onClick={() => { deleteClient(clientInfo.id) }}>Delete</button> 
     </div>
-    
+
 
 
   )
@@ -119,4 +135,4 @@ const handleClientId = (event) => {
 
 
 
-export default TaskPageForm;
+export default AddNewTask;

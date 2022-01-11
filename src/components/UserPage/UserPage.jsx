@@ -29,11 +29,6 @@ function UserPage() {
       payload: client.id
     })
     history.push('/tasks');
-
-    // dispatch({
-    //   type: 'FETCH_THIS_TASK',
-    //   payload: tasks.id
-    // })
     
   }
 

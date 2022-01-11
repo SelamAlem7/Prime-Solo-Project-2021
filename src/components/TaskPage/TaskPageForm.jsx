@@ -16,15 +16,6 @@ function TaskPageForm() {
    const tasks = useSelector((store) => store.tasks)
    const client = useSelector((store) => store.client)
 
-
-
-
-  //on page load:
-  // useEffect(() => {
-  //   dispatch({ type: 'FETCH_TASKS' })
-  // }, [])
-
-
   return(
     <div>
     <h1> Task List for {client[0].name} </h1>
@@ -33,8 +24,10 @@ function TaskPageForm() {
                         <div key={task.id}>
                             <p>{task.task}</p>
                         </div>
+                        
                     );
                 })}
+    <Button variant="contained" onClick={() => {history.push('/add_new_tasks')}}>Add Task</Button>
     <Button variant="contained" onClick={() => {history.goBack()}}>Back to Clients</Button>
     
     

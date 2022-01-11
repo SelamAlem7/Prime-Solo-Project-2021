@@ -21,6 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ClientPageForm from '../ClientPage/ClientPageForm';
 import TaskPageForm from '../TaskPage/TaskPageForm';
+import AddNewTask from '../TaskPage/AddNewTask';
 import './App.css';
 
 function App() {
@@ -84,6 +85,14 @@ function App() {
             path="/tasks"
           >
             <TaskPageForm />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows ClientPage else shows LoginPage
+            exact
+            path="/add_new_tasks"
+          >
+            <AddNewTask/>
           </ProtectedRoute>
 
 
