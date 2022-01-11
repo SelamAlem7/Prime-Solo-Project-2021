@@ -18,7 +18,7 @@ function TaskPageForm() {
 
   return(
     <div>
-    <h1> Task List for {client[0].name} </h1>
+    <h1 key={client.id}> Task List for {client.name} </h1>
     {tasks.map((task) => {
                     return (
                         <div key={task.id}>
