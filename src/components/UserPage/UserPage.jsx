@@ -18,14 +18,14 @@ function UserPage() {
   const client = useSelector((store) => store.client)
 
   // TO RUN ON PAGE LOAD
-  useEffect(() => {
-    dispatch({ type: 'FETCH_CLIENT' })
-  }, [])
+    useEffect(() => {
+      dispatch({ type: 'FETCH_CLIENT' });
+  }, []);
 
   const seeClientsTask = (client) => {
    console.log(client.id);
     dispatch({
-      type: 'FETCH_THIS_TASK',
+      type: 'FETCH_THIS_ONE_CLIENT',
       payload: client.id
     })
     history.push('/tasks');

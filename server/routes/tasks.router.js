@@ -24,9 +24,7 @@ router.get('/', (req, res) => {
   router.get('/:id', (req, res) => {
     const selectedTask = req.params.id;
     const sqlText = `SELECT * FROM "tasks"
-                      JOIN "client" 
-                        ON "tasks"."client_id"="client"."id"
-                          WHERE "client_id"=$1`;
+                          WHERE "id"=$1`;
 
     const sqlValues = [selectedTask]
     pool.query(sqlText,sqlValues)

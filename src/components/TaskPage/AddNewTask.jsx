@@ -14,6 +14,8 @@ function AddNewTask() {
    // REDUX REDUCER
    const tasks = useSelector((store) => store.tasks)
    const client = useSelector((store) => store.client)
+   const thisClient = useSelector((store) => store.oneClient)
+   console.log('this client:', thisClient)
 
 
   //LOCAL STATES
@@ -24,17 +26,18 @@ function AddNewTask() {
 
 
 
-//   //on page load:
-//   useEffect(() => {
-//     dispatch({ type: 'FETCH_TASKS' })
-//   }, [])
+  // //on page load:
+  // useEffect(() => {
+  //   dispatch({ type: 'FETCH_TASKS' })
+  // }, [])
+
 
   const onAddTask= (event) => {
     event.preventDefault();
     dispatch({
       type: 'ADD_TASKS',
       payload: {
-        client_id: client.id,
+        client_id: thisClient[0].id,
         task: task,
         completed_by: completedBy,
         completed: completed

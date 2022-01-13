@@ -3,7 +3,8 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import client from './client.reducer'; //Importing client reducer
 import tasks from './tasks.reducer';
-// import oneClient from './oneClient.reducer';
+import oneClient from './oneClient.reducer';
+import oneTask from './oneTask.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   client, // will contain clients information
   tasks, // will contain tasks for clients
-  // oneClient,
+  oneClient,
+  oneTask,
 });
 
 export default rootReducer;

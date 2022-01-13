@@ -11,7 +11,7 @@ function* fetchAllClients() {
 }
 
 
-// Get the specified movie
+// Get the specified client
 function* fetchThisClient(action) {
   try {
       const response = yield axios.get(`/api/client/${action.payload}`);

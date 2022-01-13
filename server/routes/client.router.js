@@ -23,9 +23,7 @@ router.get('/:id', (req, res) => {
   //we will then get all movies with details and genre included using JOIN query
   const sqlText = `
   SELECT * FROM "client"
-    JOIN "tasks"
-      ON "client"."id"="tasks"."client_id"
-        WHERE "client_id"=$1;`;
+        WHERE "id"=$1;`;
   const sqlValues = [selectedClient]
   pool.query(sqlText,sqlValues)
   .then( result => {
