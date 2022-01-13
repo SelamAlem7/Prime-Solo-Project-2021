@@ -36,7 +36,7 @@ function UserPage() {
 
   return (
     <div className="container">
-      <h2>Welcome Team, {user.team_name}!</h2>
+      <h2>Welcome {user.team_name}!</h2>
       <h3>Here are your clients:</h3>
       <section>
       {client.map((client) => {

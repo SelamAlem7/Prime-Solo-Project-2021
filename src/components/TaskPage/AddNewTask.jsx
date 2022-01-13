@@ -79,8 +79,8 @@ function AddNewTask() {
 <thead>
     <tr>
         <th>Task:</th>
-        <th>Completed?</th>
         <th>Completed By:</th>
+        <th>Completed?</th>
     </tr>
 </thead>
 

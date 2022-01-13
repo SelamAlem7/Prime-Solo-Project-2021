@@ -5,7 +5,7 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 
 // Getting all info about our client 
  router.get('/', rejectUnauthenticated, (req, res) => {
-  pool.query(`SELECT * FROM "client";`)
+  pool.query(`SELECT * FROM "client"`)
     .then((result) => {
       console.log(result.rows);
       res.send(result.rows);

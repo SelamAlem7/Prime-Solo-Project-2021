@@ -18,11 +18,12 @@ function TaskPageForm() {
 
   return(
     <div>
-    <h1 key={client.id}> Task List for {client.name} </h1>
+    <h1 key={client.id}> Task List for {client.name} </h1>  
     {tasks.map((task) => {
                     return (
-                        <div key={task.id}>
+                        <div key={tasks.id}>
                             <p>{task.task}</p>
+                            <input/>
                         </div>
                         
                     );
@@ -33,7 +34,7 @@ function TaskPageForm() {
     
     </div>
     
-
+//need to have a 2nd reducer that is in charge of holding just one client 
 
   )
 
