@@ -18,10 +18,13 @@ router.get('/', (req, res) => {
 
 
 
-`SELECT * FROM "tasks"
-  JOIN "client"
-    ON "tasks"."client_id" = "client"."id"
-    WHERE "id"=$1`;
+// `SELECT * FROM "tasks"
+//   JOIN "client"
+//     ON "tasks"."client_id" = "client"."id"
+//     WHERE "id"=$1`;
+
+// `SELECT * FROM "tasks"
+//     WHERE "id"=$1 AND "client_id"=$2`
 
 // 'GET' route for a specific task belonging to a specific client
   // Make a query to get the specific info from the database
@@ -29,12 +32,8 @@ router.get('/', (req, res) => {
   router.get('/:id', (req, res) => {
     const selectedTask = req.params.id;
     console.log('TESTING GET ROUTE by id', req.params.id);
-    // const sqlText = `SELECT * FROM "tasks"
-    //                   JOIN "client"
-    //                     ON "tasks"."client_id" = "client"."id"
-    //                       WHERE "id"=$1`;
     const sqlText = `SELECT * FROM "tasks"
-                          WHERE "id"=$1`;
+                       WHERE "client_id"=$1;`;
 
     const sqlValues = [selectedTask]
     pool.query(sqlText,sqlValues)
