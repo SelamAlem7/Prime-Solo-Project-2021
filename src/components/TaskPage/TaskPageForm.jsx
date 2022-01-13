@@ -28,7 +28,7 @@ function TaskPageForm() {
 
    function thisTask(){
      for ( let i = 0; i < tasks.length; i++){
-       if (tasks[i].client_id == oneClient[0].id){ //filtering out tasks belonging to clicked client
+       if (tasks[i].client_id == oneClient.id){ //filtering out tasks belonging to clicked client
          console.log('These are the tasks:', tasks[i]);
          console.log('INSIDE thisTask function', tasks.client_id);
          console.log(tasks[i].id, 'This is task with i id');
@@ -49,7 +49,8 @@ function TaskPageForm() {
   
     //on page load:
   useEffect(() => {
-    dispatch({ type: 'FETCH_TASKS' });
+    dispatch({ type: 'FETCH_THIS_ONE_TASK',
+    payload: tasks.client_id });
     thisTask();
   }, [])
 
@@ -67,9 +68,9 @@ function TaskPageForm() {
 
   return(
     <div>
-    <h1 key={client.id}> Task List for {oneClient[0].name} </h1>  
+    <h1 key={client.id}> Task List for {client.name} </h1>  
     
-    {client.map((task) => {
+    {tasks.map((task) => {
                     return (
                         <div key={tasks.id}>
                             <li>

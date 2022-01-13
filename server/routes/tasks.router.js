@@ -18,15 +18,23 @@ router.get('/', (req, res) => {
 
 
 
+`SELECT * FROM "tasks"
+  JOIN "client"
+    ON "tasks"."client_id" = "client"."id"
+    WHERE "id"=$1`;
+
 // 'GET' route for a specific task belonging to a specific client
   // Make a query to get the specific info from the database
   // Pass in the req.params.id to select a client
   router.get('/:id', (req, res) => {
     const selectedTask = req.params.id;
-    console.log('TESTING GET ROUTE', req.params.id);
-    
+    console.log('TESTING GET ROUTE by id', req.params.id);
+    // const sqlText = `SELECT * FROM "tasks"
+    //                   JOIN "client"
+    //                     ON "tasks"."client_id" = "client"."id"
+    //                       WHERE "id"=$1`;
     const sqlText = `SELECT * FROM "tasks"
-                          WHERE "client_id"=$1`;
+                          WHERE "id"=$1`;
 
     const sqlValues = [selectedTask]
     pool.query(sqlText,sqlValues)
@@ -38,6 +46,7 @@ router.get('/', (req, res) => {
       res.sendStatus(500)
     })
   });
+
 
 
 

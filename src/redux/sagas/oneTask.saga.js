@@ -9,9 +9,9 @@ function* fetchThisTask(action) {
       console.log('Inside fetch ONE task:', action.payload);
       yield put({
         type: 'SET_ONE_TASK', 
-        payload: action.payload
-      }); //this works and grabs the client 
-    } catch { console.log('fetch This one TASK error')}  
+        payload: response.data
+      }); 
+    } catch(error) { console.log('fetch This one TASK error', error)}  
 
 }
 
