@@ -23,8 +23,10 @@ router.get('/', (req, res) => {
   // Pass in the req.params.id to select a client
   router.get('/:id', (req, res) => {
     const selectedTask = req.params.id;
+    console.log('TESTING GET ROUTE', req.params.id);
+    
     const sqlText = `SELECT * FROM "tasks"
-                          WHERE "id"=$1`;
+                          WHERE "client_id"=$1`;
 
     const sqlValues = [selectedTask]
     pool.query(sqlText,sqlValues)
@@ -42,20 +44,20 @@ router.get('/', (req, res) => {
 // Add an item for the logged in user to the task list 
  router.post('/', rejectUnauthenticated, (req, res) => {
   console.log('/task POST route');
-  console.log(req.body);
+  console.log('INSIDE POST route', req.body);
   console.log('is authenticated?', req.isAuthenticated());
   console.log('user', req.user);
   const sqlText = `
     INSERT INTO "tasks"
-      ( "client_id", "task", "completed_by", "completed" )
+      ("task", "completed_by", "completed", "client_id" )
       VALUES
       ($1, $2, $3, $4);
   `;
   const sqlValues = [
-    req.client.id,
     req.body.task,
     req.body.completed_by,
     req.body.completed,
+    req.body.client_id
     
     //req.user.id -- testing
   ];
@@ -94,25 +96,27 @@ pool.query(query, sqlValues)
 router.put('/:id', (req, res) => {
   // console.log('req.params', req.params);
   // console.log('req.body', req.body);
-  const taskToUpdate = req.params.id;
-  let currentCompletedStatus = req.body.currentCompletedStatus;
-  currentCompletedStatus = 'Y';
-  const sqlText = `
+  const taskToUpdate = req.body.id;
+  // let currentCompletedStatus = req.body.currentCompletedStatus;
+  // currentCompletedStatus = 'Y';
+  const queryText = `
     UPDATE "tasks"
-      SET "completed" = $1 
-      WHERE "id" = $2;
+      SET "task" = $1 ,
+          "completed_by" = $2,
+          "completed" = $3,
+      WHERE "id" = $4;
   `;
-  const sqlValues = [
-    currentCompletedStatus,
+  pool.query(queryText, [
+    req.body.task,
+    req.body.completed_by,
+    req.body.completed,
     taskToUpdate
-  ];
-
-  pool.query(sqlText, sqlValues)
-    .then((dbResult) => {
+  ])
+    .then((res) => {
       res.sendStatus(200);
     })
-    .catch((dbErr) => {
-      console.error(dbErr);
+    .catch((error) => {
+      console.error('error in EDIT task route', error);
       res.sendStatus(500);
     })
 });

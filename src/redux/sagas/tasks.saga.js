@@ -30,7 +30,7 @@ function* fetchThisTask(action) {
 
 
   function* addTasks(action) {
-    console.log('addTasks action:', action);
+    console.log(' THIS addTasks action:', action);
     try {
         axios({
             method: 'POST',

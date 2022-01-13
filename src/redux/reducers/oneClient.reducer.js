@@ -1,4 +1,4 @@
-// Used to store all movies form the server
+// Used to store ONE client form the server
 const OneClient = (state = {}, action) => {
     switch (action.type) {
       case 'SET_ONE_CLIENT':

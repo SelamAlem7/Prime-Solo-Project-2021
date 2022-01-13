@@ -37,10 +37,10 @@ function AddNewTask() {
     dispatch({
       type: 'ADD_TASKS',
       payload: {
-        client_id: thisClient[0].id,
         task: task,
         completed_by: completedBy,
-        completed: completed
+        completed: completed,
+        client_id: thisClient[0].id
       }
     })
     setTask('');
@@ -115,10 +115,12 @@ function AddNewTask() {
           onChange={(event) => setCompletedBy(event.target.value)}/>
 
     <label for="completed">Is this Task Completed?</label>
+
     <select onChange={(event) => setCompleted(event.target.value)}>
             <option value="">Yes</option>
             <option value="">No</option>
     </select>
+
     <button>Add Task</button>
     </form>
 

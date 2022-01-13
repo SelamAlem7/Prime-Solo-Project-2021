@@ -22,6 +22,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import ClientPageForm from '../ClientPage/ClientPageForm';
 import TaskPageForm from '../TaskPage/TaskPageForm';
 import AddNewTask from '../TaskPage/AddNewTask';
+//import TaskEditPage from '../TaskPage/TaskEditPage';
 import './App.css';
 
 function App() {

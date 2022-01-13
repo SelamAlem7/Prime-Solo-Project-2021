@@ -6,6 +6,7 @@ import clientSaga from './client.saga';
 import oneClientSaga from './oneClient.saga'
 import tasksSaga from './tasks.saga'
 import oneTaskSaga from './oneTask.saga'
+//import editTaskSaga from './editTask.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -23,6 +24,7 @@ export default function* rootSaga() {
     tasksSaga(),
     oneClientSaga(),
     oneTaskSaga(),
+    // editTaskSaga(),
   ]);
 }
 

@@ -61,13 +61,16 @@ router.get('/:id', (req, res) => {
     });
 });
 
-
+// DELETE FROM "client"
+//         WHERE "client"."id"=$1;
 
 // Delete a client if it's something the logged in user added
  router.delete('/:id', (req, res) => {
     const query = `
-        DELETE FROM "client"
-        WHERE "client"."id"=$1;
+    DELETE FROM "client"
+     WHERE "client"."id"=$1;
+    
+
     `;
     const sqlValues = [req.params.id]
     console.log(query);

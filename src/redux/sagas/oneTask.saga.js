@@ -6,10 +6,10 @@ import axios from 'axios';
 function* fetchThisTask(action) {
   try {
       const response = yield axios.get(`/api/tasks/${action.payload}`);
-      console.log('Inside fetch one this task:', action.payload);
+      console.log('Inside fetch ONE task:', action.payload);
       yield put({
         type: 'SET_ONE_TASK', 
-        payload: response.data
+        payload: action.payload
       }); //this works and grabs the client 
     } catch { console.log('fetch This one TASK error')}  
 

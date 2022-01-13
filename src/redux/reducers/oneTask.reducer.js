@@ -1,4 +1,4 @@
-// Used to store all movies form the server
+// Used to store ONE task form the server
 const oneTask = (state = [], action) => {
     switch (action.type) {
       case 'SET_ONE_TASK':
