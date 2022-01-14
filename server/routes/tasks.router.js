@@ -104,30 +104,32 @@ pool.query(query, sqlValues)
 
 
 // Update an item if it's something the logged in user added
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   // console.log('req.params', req.params);
   // console.log('req.body', req.body);
+  try{
   const taskToUpdate = req.body.id;
   const queryText = `
     UPDATE "tasks"
-      SET "task" = $1 ,
-          "completed_by" = $2,
-          "completed" = $3,
-      WHERE "id" = $4;
+      SET "completed" = $1,
+        WHERE "id" = $2;
   `;
-  pool.query(queryText, [
-    req.body.task,
-    req.body.completed_by,
+  const dbRes = await pool.query(queryText, [
+    
     req.body.completed,
     taskToUpdate
   ])
-    .then((res) => {
-      res.sendStatus(200);
-    })
-    .catch((error) => {
-      console.error('error in EDIT task route', error);
-      res.sendStatus(500);
-    })
+  if(dbRes.rows.length === 0){
+    res.sendStatus(404)
+    return;
+  } else{
+    res.send(dbRes.rows[0])
+  } 
+}catch(err){
+  console.log('error in put ', err.message)
+  res.sendStatus(500)
+}
+    
 });
 
 

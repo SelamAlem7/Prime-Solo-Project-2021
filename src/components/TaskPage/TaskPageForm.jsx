@@ -18,7 +18,9 @@ function TaskPageForm() {
    const oneClient = useSelector((store) => store.oneClient)
    const oneTask = useSelector((store) => store.oneTask)
 
-
+   const [newTask, setNewTask] = useState('');
+   const [completedBy, setCompletedBy] = useState('');
+   const [completed, setCompleted] = useState('');
 
 
   console.log('This is tasks STORE', tasks); //working
@@ -58,7 +60,29 @@ function TaskPageForm() {
    
   }, [])
 
-  
+  const onAddTask= (event) => {
+    event.preventDefault();
+    dispatch({
+      type: 'ADD_TASKS',
+      payload: {
+        task: task,
+        completed_by: completedBy,
+        completed: completed,
+        client_id: oneClient
+      }
+    })
+    setTask('');
+    setCompleted('');
+    setCompletedBy('');
+  }
+
+
+  function deleteTask(task) {
+    dispatch({
+      type: 'DELETE_TASK',
+      payload: newTask
+    })
+  }
 
   //  LOCAL
   //  const [completed, setCompleted] = useState('');
@@ -71,6 +95,7 @@ function TaskPageForm() {
   //  }
 
   return(
+    <div>
     <div>
     <h1 key={client.id}> Task List for {client.name} </h1>  
     
@@ -96,6 +121,60 @@ function TaskPageForm() {
     
     
     </div>
+
+<div>
+
+        
+
+    
+
+<form onSubmit={onAddTask}>
+
+
+
+
+<table>
+
+<thead>
+<tr>
+    <th>Task:</th>
+    <th>Completed By:</th>
+    <th>Completed?</th>
+</tr>
+</thead>
+
+
+
+</table>
+
+<input
+      type="text"
+      required="required"
+      placeholder="Enter a Task..."
+      value={newTask}
+      onChange={(event) => setNewTask(event.target.value)}/>
+
+<input
+      type="text"
+      required="required"
+      placeholder="Team Member's Name..."
+      value={completedBy}
+      onChange={(event) => setCompletedBy(event.target.value)}/>
+
+<label for="completed">Is this Task Completed?</label>
+
+<select onChange={(event) => setCompleted(event.target.value)}>
+        <option value="">Yes</option>
+        <option value="">No</option>
+</select>
+
+<button>Add Task</button>
+</form>
+
+<button onClick={() => { deleteClient(clientInfo.id) }}>Delete</button> 
+
+</div>
+</div>
     
 //need to have a 2nd reducer that is in charge of holding just one client 
 

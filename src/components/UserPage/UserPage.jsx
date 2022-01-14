@@ -19,8 +19,9 @@ function UserPage() {
 
   // TO RUN ON PAGE LOAD
     useEffect(() => {
-      dispatch({ type: 'FETCH_CLIENT' })
+      dispatch({ type: 'FETCH_CLIENT' });
       dispatch({ type: 'FETCH_TASKS'});
+      dispatch({ type: 'CLEAR_ONE_TASK'});
   }, []);
 
   const seeClientsTask = (client) => {
@@ -30,7 +31,6 @@ function UserPage() {
       payload: client.id
     })
     history.push('/tasks');
-    
   }
 
 
