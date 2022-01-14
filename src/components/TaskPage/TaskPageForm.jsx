@@ -4,6 +4,13 @@ import {useSelector, useDispatch} from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Card, CardActionArea, CardMedia, Typography, CardContent } from "@material-ui/core";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import './TaskPage.css';
 
 
@@ -38,7 +45,7 @@ function TaskPageForm() {
       //    console.log(tasks[i].id, 'This is task with i id');
          dispatch({
            type: 'FETCH_THIS_ONE_TASK',
-           payload: tasks[i].id
+           payload: tasks[i].client_id
          })
       
        } else {
@@ -56,8 +63,6 @@ function TaskPageForm() {
     // on page load:
   useEffect(() => {
    thisTask(tasks)
-   
-   
   }, [])
 
   const onAddTask= (event) => {
@@ -65,13 +70,14 @@ function TaskPageForm() {
     dispatch({
       type: 'ADD_TASKS',
       payload: {
-        task: task,
+        task: newTask,
         completed_by: completedBy,
         completed: completed,
         client_id: oneClient
       }
     })
-    setTask('');
+  
+    setNewTask('');
     setCompleted('');
     setCompletedBy('');
   }
@@ -93,19 +99,29 @@ function TaskPageForm() {
   //    })
   //    setCompleted('')
   //  }
-
+  function onEdit (task){
+    console.log(task.id, 'this is the task id')
+ dispatch({
+    type: 'FETCH_THIS_TASK_TO_EDIT',
+    payload: task.id
+  })
+    history.push('/add_new_tasks')
+  }
+  
   return(
     <div>
-    <div>
+    {/* <div>
     <h1 key={client.id}> Task List for {client.name} </h1>  
     
     {oneTask.map((task) => {
                     return (
-                        <div key={oneTask.id}>
+                        <div key={task.id}>
                             <li  className="task_list">
                               {task.task} 
                               <input placeholder="Completed by"/> 
-                              <button onClick={() => {history.push('/add_new_tasks')}}>Edit</button>
+
+                              <button onClick={e => onEdit(task)}>Edit</button>
+                              
                               <label class="container">
                                   <input class="container" type="checkbox" />
                                      <span className="checkmark"></span>
@@ -116,37 +132,55 @@ function TaskPageForm() {
                         
                     );
                 })}
-    <Button variant="contained" onClick={() => {history.push('/add_new_tasks')}}>Add Task</Button>
-    <Button variant="contained" onClick={() => {history.goBack()}}>Back to Clients</Button>
+    
     
     
     </div>
 
-<div>
+<div> */}
 
         
 
     
 
-<form onSubmit={onAddTask}>
 
 
 
 
-<table>
+<div>
+<TableContainer component={Paper}>
+      <Table sx={{ minWidth: 150 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="right">Task</TableCell>
+            <TableCell align="right">Assigned Staff</TableCell>
+            <TableCell align="right">Completed Status</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {oneTask.map((tasks) => {
+            return (
 
-<thead>
-<tr>
-    <th>Task:</th>
-    <th>Completed By:</th>
-    <th>Completed?</th>
-</tr>
-</thead>
+            
+            <TableRow
+              key={oneTask.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {tasks.task}
+              </TableCell>  
+              <TableCell align="right">{tasks.task}</TableCell>
+              <TableCell align="right">{tasks.completed_by}</TableCell>
+              <TableCell align="right">{tasks.completed}</TableCell>
+            </TableRow>
+            )})}
+        </TableBody>
+      </Table>
+    </TableContainer>
+ 
 
 
-
-</table>
-
+<form>
 <input
       type="text"
       required="required"
@@ -164,16 +198,19 @@ function TaskPageForm() {
 <label for="completed">Is this Task Completed?</label>
 
 <select onChange={(event) => setCompleted(event.target.value)}>
-        <option value="">Yes</option>
-        <option value="">No</option>
+        <option value="Y">Yes</option>
+        <option value="N">No</option>
 </select>
 
-<button>Add Task</button>
+<button variant="contained" onClick={() => { onAddTask(event) }}>Add Task</button>
+
+
 </form>
 
-<button onClick={() => { deleteClient(clientInfo.id) }}>Delete</button> 
-
+<Button variant="contained" onClick={() => { deleteClient(clientInfo.id) }}>Delete</Button> 
+<Button variant="contained" onClick={() => {history.goBack()}}>Back to Clients</Button>
 </div>
+
 </div>
     
 //need to have a 2nd reducer that is in charge of holding just one client 

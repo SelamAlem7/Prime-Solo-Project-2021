@@ -11,126 +11,40 @@ function AddNewTask() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-   // REDUX REDUCER
-   const tasks = useSelector((store) => store.tasks)
-   const client = useSelector((store) => store.client)
-   const thisClient = useSelector((store) => store.oneClient)
-   console.log('this client:', thisClient)
-
-
-  //LOCAL STATES
-  const [task, setTask] = useState('');
-  const [completedBy, setCompletedBy] = useState('');
-  const [completed, setCompleted] = useState('');
+  const editTask = useSelector((store) => store.editTask)
+function checkEdit (){
+  for (let i = 0; i < task.length; i++){
+    if (task[i].id === editTask){
+      console.log('we got some edits')
+      dispatch({
+        type: 'FETCH_THIS_TASK_TO_EDIT'
+      })
+    }
+  }
+}
   
 
 
-
-  // //on page load:
+//   on page load:
    useEffect(() => {
     dispatch({ type: 'FETCH_TASKS' })
-    console.log('tasks in addnewtask', tasks)
-}, [])
+     console.log('tasks in addnewtask', tasks)
+ }, [])
 
 
-  const onAddTask= (event) => {
-    event.preventDefault();
-    dispatch({
-      type: 'ADD_TASKS',
-      payload: {
-        task: task,
-        completed_by: completedBy,
-        completed: completed,
-        client_id: thisClient[0].id
-      }
-    })
-    setTask('');
-    setCompleted('');
-    setCompletedBy('');
-  }
 
 
-  function deleteTask(tasks) {
-    dispatch({
-      type: 'DELETE_TASK',
-      payload: tasks
-    })
-  }
-
-  // function handleMarkCompleted(){
-  //   const taskToMark = $(this).data('id');
-  //   const currentCompletedStatus = $(this).data('completed-status');
-
-
-  // }
 
 
   return(
-      
     <div>
-
-        
-
-    
-
-    <form onSubmit={onAddTask}>
-
-
-    <h2>Task List:</h2>
-
-<table>
-
-<thead>
-    <tr>
-        <th>Task:</th>
-        <th>Completed By:</th>
-        <th>Completed?</th>
-    </tr>
-</thead>
-
-
-<tbody>
-  {tasks.map((task) => {
-    return (
-      <tr key={task.id}> 
-      <td>{task.task}</td>
-      <td>{task.completed_by}</td>
-      <td>{task.completed}</td>
-      </tr> //keeps log of the user ID who added client in our Database
-    )
-  })}
-</tbody>
-</table>
-    <input
-          type="text"
-          required="required"
-          placeholder="Enter a Task..."
-          value={task}
-          onChange={(event) => setTask(event.target.value)}/>
-
-    <input
-          type="text"
-          required="required"
-          placeholder="Team Member's Name..."
-          value={completedBy}
-          onChange={(event) => setCompletedBy(event.target.value)}/>
-
-    <label for="completed">Is this Task Completed?</label>
-
-    <select onChange={(event) => setCompleted(event.target.value)}>
-            <option value="">Yes</option>
-            <option value="">No</option>
-    </select>
-
-    <button>Add Task</button>
-    </form>
-
-    <button onClick={() => { deleteClient(clientInfo.id) }}>Delete</button> 
-    </div>
-
-    )
-
-
+    <h1> Task to Edit </h1>
+      <div key={editTask}>  
+        {editTask}
+      </div>
+   <input/> 
+   </div>
+  )
 };
 
 

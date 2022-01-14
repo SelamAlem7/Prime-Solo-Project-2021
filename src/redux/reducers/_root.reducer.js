@@ -5,7 +5,7 @@ import client from './client.reducer'; //Importing client reducer
 import tasks from './tasks.reducer';
 import oneClient from './oneClient.reducer';
 import oneTask from './oneTask.reducer';
-//import editTask from './editTask.reducer';
+import editTask from './editTask.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   tasks, // will contain tasks for clients
   oneClient,
   oneTask,
-  // editTask
+  editTask
 });
 
 export default rootReducer;
