@@ -4,6 +4,8 @@ import axios from 'axios';
 
 // Get the specified task for specified client
 function* fetchThisTask(action) {
+
+  
   try {
       const response = yield axios.get(`/api/tasks/${action.payload}`);
       console.log('Inside fetch ONE task:', action.payload);
