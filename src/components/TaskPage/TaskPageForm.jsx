@@ -12,6 +12,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import './TaskPage.css';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 
 
@@ -76,17 +80,17 @@ function TaskPageForm() {
         client_id: oneClient
       }
     })
-  
+    thisTask(tasks);
     setNewTask('');
     setCompleted('');
     setCompletedBy('');
   }
 
 
-  function deleteTask(task) {
+  function deleteTask(taskId) {
     dispatch({
       type: 'DELETE_TASK',
-      payload: newTask
+      payload: taskId
     })
   }
 
@@ -110,51 +114,15 @@ function TaskPageForm() {
   
   return(
     <div>
-    {/* <div>
-    <h1 key={client.id}> Task List for {client.name} </h1>  
-    
-    {oneTask.map((task) => {
-                    return (
-                        <div key={task.id}>
-                            <li  className="task_list">
-                              {task.task} 
-                              <input placeholder="Completed by"/> 
 
-                              <button onClick={e => onEdit(task)}>Edit</button>
-                              
-                              <label class="container">
-                                  <input class="container" type="checkbox" />
-                                     <span className="checkmark"></span>
-                                </label>
-                            </li>
-
-                        </div>
-                        
-                    );
-                })}
-    
-    
-    
-    </div>
-
-<div> */}
-
-        
-
-    
-
-
-
-
-
-<div>
 <TableContainer component={Paper}>
       <Table sx={{ minWidth: 150 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="right">Task</TableCell>
-            <TableCell align="right">Assigned Staff</TableCell>
-            <TableCell align="right">Completed Status</TableCell>
+            <TableCell align="right"> <Typography variant="h6"> TASKS </Typography></TableCell>
+            <TableCell align="right"> <Typography variant="h6"> ASSIGNED STAFF </Typography> </TableCell>
+            <TableCell align="right"> <Typography variant="h6"> COMPLETED STATUS </Typography></TableCell>
+            <TableCell align="right"> <Typography variant="h6"> DELETE </Typography></TableCell> 
           </TableRow>
         </TableHead>
         <TableBody>
@@ -172,9 +140,24 @@ function TaskPageForm() {
               <TableCell align="right">{tasks.task}</TableCell>
               <TableCell align="right">{tasks.completed_by}</TableCell>
               <TableCell align="right">{tasks.completed}</TableCell>
+              
+              
+              <TableCell>
+              <Stack direction="column" alignItems="flex-end">
+                    <Chip
+                      label=""
+                      onClick={() => { deleteTask(oneTask.id) }}
+                      onDelete={deleteTask}
+                      deleteIcon={<DeleteIcon />}
+                      variant="outlined"
+                    />
+            </Stack>
+            </TableCell>
             </TableRow>
             )})}
         </TableBody>
+
+
       </Table>
     </TableContainer>
  
@@ -207,9 +190,8 @@ function TaskPageForm() {
 
 </form>
 
-<Button variant="contained" onClick={() => { deleteClient(clientInfo.id) }}>Delete</Button> 
 <Button variant="contained" onClick={() => {history.goBack()}}>Back to Clients</Button>
-</div>
+
 
 </div>
     

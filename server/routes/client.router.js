@@ -70,8 +70,6 @@ router.get('/:id', (req, res) => {
     const query = `
     DELETE FROM "client"
      WHERE "client"."id"=$1;
-    
-
     `;
     const sqlValues = [req.params.id]
     console.log(query);

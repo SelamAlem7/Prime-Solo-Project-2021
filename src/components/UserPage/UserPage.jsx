@@ -56,7 +56,7 @@ function UserPage() {
         ) 
       })}
     </section>
-
+    
       <AddNewClientButton className="btn"  />
       {/* <p>You are caring for: {client.name}</p> */}
       <LogOutButton className="btn" />
