@@ -2,7 +2,7 @@ import React from 'react';
 
 import {useSelector, useDispatch} from 'react-redux';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Button, Card, CardActionArea, CardMedia, Typography, CardContent } from "@material-ui/core";
 import './TaskPage.css';
 
@@ -19,38 +19,43 @@ function TaskPageForm() {
    const oneTask = useSelector((store) => store.oneTask)
 
 
+
+
   console.log('This is tasks STORE', tasks); //working
   console.log('This is ONE client', oneClient); //working
   console.log('This is ONE task', oneTask);
 
-
-  const thisClientsTasks = [];
-
-   function thisTask(){
+//thisTask(tasks)
+   function thisTask(tasks){
+     console.log('inside thisTask function')
+     
      for ( let i = 0; i < tasks.length; i++){
-       if (tasks[i].client_id == oneClient[0].id){ //filtering out tasks belonging to clicked client
-         console.log('These are the tasks:', tasks[i]);
-         console.log('INSIDE thisTask function', tasks.client_id);
-         console.log(tasks[i].id, 'This is task with i id');
+       if (tasks[i].client_id === oneClient){ //filtering out tasks belonging to clicked client
+      //    console.log('These are the tasks:', tasks[i]);
+      //    console.log('INSIDE thisTask function', tasks.client_id);
+      //    console.log(tasks[i].id, 'This is task with i id');
          dispatch({
            type: 'FETCH_THIS_ONE_TASK',
-           payload: tasks.client_id
+           payload: tasks[i].id
          })
-       }
-       else{
+      
+       } else {
          console.log('There is none');
+         
        }
+       
      }
    }
 
-   console.log('This Clients Tasks Are:', thisClientsTasks);
+   //console.log('This Clients Tasks Are:', thisTask(tasks));
   
 
   
-    //on page load:
+    // on page load:
   useEffect(() => {
-    dispatch({ type: 'FETCH_TASKS' });
-    thisTask();
+   thisTask(tasks)
+   
+   
   }, [])
 
   
@@ -69,16 +74,21 @@ function TaskPageForm() {
     <div>
     <h1 key={client.id}> Task List for {client.name} </h1>  
     
-    {client.map((task) => {
+    {oneTask.map((task) => {
                     return (
-                        <div key={tasks.id}>
-                            <li>
+                        <div key={oneTask.id}>
+                            <li  className="task_list">
                               {task.task} 
                               <input placeholder="Completed by"/> 
-                              <button onClick={() => {history.push('/editTask')}}>Edit</button>
-                              {/* <input className="checkbox" type="checkbox" value={completed} onChange={e => setCompleted(e.target.value)}/> */}
+                              <button onClick={() => {history.push('/add_new_tasks')}}>Edit</button>
+                              <label class="container">
+                                  <input class="container" type="checkbox" />
+                                     <span className="checkmark"></span>
+                                </label>
                             </li>
+
                         </div>
+                        
                     );
                 })}
     <Button variant="contained" onClick={() => {history.push('/add_new_tasks')}}>Add Task</Button>

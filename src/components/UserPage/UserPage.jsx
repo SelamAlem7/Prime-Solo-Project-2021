@@ -19,18 +19,20 @@ function UserPage() {
 
   // TO RUN ON PAGE LOAD
     useEffect(() => {
-      dispatch({ type: 'FETCH_CLIENT' });
+      dispatch({ type: 'FETCH_CLIENT' })
+      dispatch({ type: 'FETCH_TASKS'});
   }, []);
 
   const seeClientsTask = (client) => {
    console.log(client.id);
     dispatch({
-      type: 'FETCH_THIS_ONE_CLIENT',
+      type: 'SET_ONE_CLIENT',
       payload: client.id
     })
     history.push('/tasks');
     
   }
+
 
 
 
@@ -41,16 +43,16 @@ function UserPage() {
       <section>
       {client.map((client) => {
         return (
-
-          <Card className="taskButton" key={client.id} onClick={e => seeClientsTask(client)} sx={{ maxWidth: 345 }}>
+          <div className="taskButton" >
+          <Card key={client.id} onClick={e => seeClientsTask(client)} sx={{ maxWidth: 345 }}>
              Task List For
-          <CardContent>
+          <CardContent > 
             <Typography gutterBottom variant="h5" component="div">
               {client.name}
             </Typography>
           </CardContent>
           </Card>
-
+          </div>
         ) 
       })}
     </section>

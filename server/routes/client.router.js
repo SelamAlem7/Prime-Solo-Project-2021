@@ -35,6 +35,7 @@ router.get('/:id', (req, res) => {
   })
 });
 
+
 // Add a client for the logged in user to the client table in our database
  router.post('/', rejectUnauthenticated, (req, res) => {
   console.log('/client POST route');

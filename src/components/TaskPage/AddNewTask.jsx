@@ -27,9 +27,10 @@ function AddNewTask() {
 
 
   // //on page load:
-  // useEffect(() => {
-  //   dispatch({ type: 'FETCH_TASKS' })
-  // }, [])
+   useEffect(() => {
+    dispatch({ type: 'FETCH_TASKS' })
+    console.log('tasks in addnewtask', tasks)
+}, [])
 
 
   const onAddTask= (event) => {

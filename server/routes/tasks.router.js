@@ -5,8 +5,8 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 
 // Get all tasks
 router.get('/', (req, res) => {
-  const query = `SELECT * FROM "tasks"`;
-  pool.query(query)
+  
+  pool.query(`SELECT * FROM "tasks"`)
     .then( result => {
       res.send(result.rows);
     })
@@ -29,22 +29,25 @@ router.get('/', (req, res) => {
 // 'GET' route for a specific task belonging to a specific client
   // Make a query to get the specific info from the database
   // Pass in the req.params.id to select a client
-  router.get('/:id', (req, res) => {
-    const selectedTask = req.params.id;
-    console.log('TESTING GET ROUTE by id', req.params.id);
-    const sqlText = `SELECT * FROM "tasks"
-                       WHERE "client_id"=$1;`;
-
-    const sqlValues = [selectedTask]
-    pool.query(sqlText,sqlValues)
-    .then( result => {
-      res.send(result.rows);
-    })
-  .catch(err => {
-      console.log('ERROR: inside get task router by id', err);
-      res.sendStatus(500)
-    })
-  });
+//Getting tasks by client_id:
+router.get('/:id', (req, res) => {
+  const selectedTask = req.params.id;
+  //we will then get all movies with details and genre included using JOIN query
+  const sqlText = `
+  SELECT * FROM "tasks"
+  INNER JOIN "client" 
+    ON "tasks"."client_id"="client"."id"
+      WHERE "client_id"=$1`;
+  const sqlValues = [selectedTask]
+  pool.query(sqlText,sqlValues)
+  .then( result => {
+    res.send(result.rows);
+  })
+.catch(err => {
+    console.log('ERROR: GET route via ID', err);
+    res.sendStatus(500)
+  })
+});
 
 
 
@@ -105,8 +108,6 @@ router.put('/:id', (req, res) => {
   // console.log('req.params', req.params);
   // console.log('req.body', req.body);
   const taskToUpdate = req.body.id;
-  // let currentCompletedStatus = req.body.currentCompletedStatus;
-  // currentCompletedStatus = 'Y';
   const queryText = `
     UPDATE "tasks"
       SET "task" = $1 ,
