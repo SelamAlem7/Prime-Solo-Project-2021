@@ -166,9 +166,9 @@ function TaskPageForm() {
               key={oneTask.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              {/* <TableCell component="th" scope="row">
                 {tasks.task}
-              </TableCell>  
+              </TableCell>   */}
               <TableCell align="right">{tasks.task}</TableCell>
               <TableCell align="right">{tasks.completed_by}</TableCell>
               <TableCell align="right">{tasks.completed}</TableCell>
