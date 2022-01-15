@@ -35,8 +35,6 @@ router.get('/:id', (req, res) => {
   //we will then get all movies with details and genre included using JOIN query
   const sqlText = `
   SELECT * FROM "tasks"
-  INNER JOIN "client" 
-    ON "tasks"."client_id"="client"."id"
       WHERE "client_id"=$1`;
   const sqlValues = [selectedTask]
   pool.query(sqlText,sqlValues)
@@ -84,11 +82,11 @@ router.get('/:id', (req, res) => {
 
 
 
-// Delete an item if it's something the logged in user added
+// Delete an item 
  router.delete('/:id', (req, res) => {
   const query = `
       DELETE FROM "tasks"
-      WHERE "tasks"."id"=$1;
+      WHERE "client_id"=$1;
   `;
   const sqlValues = [req.params.id]
   console.log(query);

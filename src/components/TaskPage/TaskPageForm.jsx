@@ -20,6 +20,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 function TaskPageForm() {
+      // on page load:
+      useEffect(() => {
+        dispatch({
+          type: 'FETCH_THIS_ONE_TASK',
+          payload: oneClient
+        })
+      }, [])
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -38,36 +46,35 @@ function TaskPageForm() {
   console.log('This is ONE client', oneClient); //working
   console.log('This is ONE task', oneTask);
 
+
+
 //thisTask(tasks)
    function thisTask(tasks){
      console.log('inside thisTask function')
      
-     for ( let i = 0; i < tasks.length; i++){
-       if (tasks[i].client_id === oneClient){ //filtering out tasks belonging to clicked client
+    //  for ( let i = 0; i < tasks.length; i++){
+    //    if (tasks[i].client_id === oneClient){ //filtering out tasks belonging to clicked client
       //    console.log('These are the tasks:', tasks[i]);
       //    console.log('INSIDE thisTask function', tasks.client_id);
       //    console.log(tasks[i].id, 'This is task with i id');
          dispatch({
            type: 'FETCH_THIS_ONE_TASK',
-           payload: tasks[i].client_id
+           payload: oneClient
          })
       
-       } else {
-         console.log('There is none');
+    //    } else {
+    //      console.log('There is none');
          
-       }
+    //    }
        
-     }
+    //  }
    }
 
    //console.log('This Clients Tasks Are:', thisTask(tasks));
   
 
   
-    // on page load:
-  useEffect(() => {
-   thisTask(tasks)
-  }, [])
+
 
   const onAddTask= (event) => {
     event.preventDefault();
@@ -87,11 +94,17 @@ function TaskPageForm() {
   }
 
 
-  function deleteTask(taskId) {
+  const deleteTask = (taskId, oneClient)  => {
+    console.log('inside deleteTask function', taskId)
     dispatch({
       type: 'DELETE_TASK',
-      payload: taskId
+      payload: {
+        taskId: taskId,
+        oneClient: oneClient
+      }
     })
+    thisTask(tasks);
+    console.log('DELETEtask function thisTask(tasks) is:', );
   }
 
   //  LOCAL
@@ -127,11 +140,12 @@ function TaskPageForm() {
         </TableHead>
         <TableBody>
           {oneTask.map((tasks) => {
+            console.log('inside MAP', tasks)
             return (
 
             
             <TableRow
-              key={oneTask.id}
+              key={tasks.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               {/* <TableCell component="th" scope="row">
@@ -143,12 +157,12 @@ function TaskPageForm() {
               
               
               <TableCell>
-              <Stack direction="column" alignItems="flex-end">
+              <Stack direction="column" alignItems="flex-end" key={tasks.id}>
                     <Chip
                       label=""
-                      onClick={() => { deleteTask(oneTask.id) }}
-                      onDelete={deleteTask}
-                      deleteIcon={<DeleteIcon />}
+                      onClick={() => { deleteTask(tasks.id) }}
+                      // onDelete={deleteTask}
+                      // deleteIcon={<DeleteIcon />}
                       variant="outlined"
                     />
             </Stack>

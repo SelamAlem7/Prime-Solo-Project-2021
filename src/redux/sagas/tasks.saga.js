@@ -46,12 +46,15 @@ function* fetchThisTask(action) {
 
 
   function* deleteTask(action) {
-    console.log('deleteTask action:', action);
+    console.log('inside saga deleteTask action:', action);
     const response = yield axios({
       method: 'DELETE',
-      url: `/api/tasks/${action.payload}`,
+      url: `/api/tasks/${action.payload.oneClient}`,
     })
-    yield put({ type: 'FETCH_TASKS' })
+    yield put({ 
+      type: 'FETCH_THIS_ONE_TASK',
+      payload: action.payload.oneClient
+         })
   }
 
 
