@@ -94,17 +94,18 @@ function TaskPageForm() {
   }
 
 
-  const deleteTask = (taskId, oneClient)  => {
-    console.log('inside deleteTask function', taskId)
+  const deleteTask = (oneTask, oneClient)  => {
+    console.log('inside deleteTask function, taskId is:', oneTask)
+    console.log('inside deleteTask function, oneClient is:', oneClient)
     dispatch({
       type: 'DELETE_TASK',
       payload: {
-        taskId: taskId,
+        oneTask: oneTask,
         oneClient: oneClient
       }
     })
     thisTask(tasks);
-    console.log('DELETEtask function thisTask(tasks) is:', );
+    // console.log('DELETEtask function thisTask(tasks) is:', );
   }
 
   //  LOCAL
@@ -161,8 +162,8 @@ function TaskPageForm() {
                     <Chip
                       label=""
                       onClick={() => { deleteTask(tasks.id) }}
-                      // onDelete={deleteTask}
-                      // deleteIcon={<DeleteIcon />}
+                      onDelete={deleteTask}
+                      deleteIcon={<DeleteIcon />}
                       variant="outlined"
                     />
             </Stack>
