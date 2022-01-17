@@ -15,6 +15,14 @@ import './TaskPage.css';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Box from '@mui/material/Box';
+
 
 
 
@@ -43,6 +51,10 @@ function TaskPageForm() {
    const [newTask, setNewTask] = useState('');
    const [completedBy, setCompletedBy] = useState('');
    const [completed, setCompleted] = useState('');
+   
+   const handleChange = (event) => {
+    setCompleted(event.target.value);
+  };
 
 
   console.log('This is tasks STORE', tasks); //working
@@ -128,27 +140,38 @@ function TaskPageForm() {
   })
     history.push('/add_new_tasks')
   }
-  
+
+
+
+//const currentlyEditing = editIdx === i;
+
+
+
   return(
     <div>
 
 
-  <TableContainer component={Paper} >
+  <TableContainer component={Paper} editable={true}>
     <Table sx={{ minWidth: 150 }} aria-label="simple table">
       <TableHead>
+
         <TableRow>
           <TableCell align="right"> <Typography variant="h6"> TASKS </Typography></TableCell>
           <TableCell align="right"> <Typography variant="h6"> ASSIGNED STAFF </Typography> </TableCell>
           <TableCell align="right"> <Typography variant="h6"> COMPLETED STATUS </Typography></TableCell>
           <TableCell align="right"> <Typography variant="h6"> DELETE </Typography></TableCell> 
+          <TableCell align="right"> <Typography variant="h6"> EDIT </Typography></TableCell> 
         </TableRow>
+
       </TableHead>
+
+
         <TableBody>
           {oneTask.map((tasks) => {
             console.log('inside MAP', tasks)
                   return ( 
                       <TableRow
-                        key={tasks.id}
+                        key={tasks.id} 
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                       >
                         {/* <TableCell component="th" scope="row">
@@ -168,6 +191,10 @@ function TaskPageForm() {
                                     />
                               </Stack>
                           </TableCell>
+                          <TableCell>
+                          <EditIcon  onClick={() => startEditing(i) }/>
+                          </TableCell>
+
                       </TableRow>
                   )})}
               </TableBody>
@@ -177,28 +204,46 @@ function TaskPageForm() {
 
 
 <form>
-<input
-      type="text"
-      required="required"
-      placeholder="Enter a Task..."
-      value={newTask}
-      onChange={(event) => setNewTask(event.target.value)}/>
 
-<input
-      type="text"
-      required="required"
-      placeholder="Team Member's Name..."
-      value={completedBy}
-      onChange={(event) => setCompletedBy(event.target.value)}/>
+<TextField id="outlined-basic" label="New Task" variant="standard" 
+            placeholder="Enter a Task..." value={newTask}
+            onChange={(event) => setNewTask(event.target.value)} />
 
+
+<TextField id="outlined-basic" label="Team Member" variant="standard" 
+            required="required" placeholder="Team Member's Name..." value={completedBy}
+            onChange={(event) => setCompletedBy(event.target.value)} />
+
+
+
+
+{/* 
 <label for="completed">Is this Task Completed?</label>
 
 <select onChange={(event) => setCompleted(event.target.value)}>
         <option value="Y">Yes</option>
         <option value="N">No</option>
-</select>
+</select> */}
 
-<button variant="contained" onClick={() => { onAddTask(event) }}>Add Task</button>
+<Box>
+      <FormControl sx={{ m: 1, minWidth: 135 }}>
+        <InputLabel id="demo-simple-select-label">Completed?</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={completed}
+          label="Completed  ?"
+          onChange={(event) => setCompleted(event.target.value)}>
+          <MenuItem value="N">No</MenuItem>
+          <MenuItem value="Y">Yes</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
+
+
+
+
+<Button variant="contained" onClick={(event) => { onAddTask(event) }}>Add Task</Button>
 
 
 </form>
