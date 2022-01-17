@@ -86,7 +86,7 @@ router.get('/:id', (req, res) => {
  router.delete('/:id', (req, res) => {
   const query = `
       DELETE FROM "tasks"
-      WHERE "client_id"=$1;
+      WHERE "id"=$1;
   `;
   const sqlValues = [req.params.id]
   console.log(query);
@@ -102,33 +102,31 @@ pool.query(query, sqlValues)
 
 
 // Update an item if it's something the logged in user added
-router.put('/:id', async (req, res) => {
+router.put('/:id', (req, res) => {
   // console.log('req.params', req.params);
   // console.log('req.body', req.body);
-  try{
-  const taskToUpdate = req.body.id;
-  const queryText = `
+  
+  //const taskToUpdate = req.body.id;
+  const updateQuery = `
     UPDATE "tasks"
-      SET "completed" = $1,
-        WHERE "id" = $2;
+      SET "task" =$1, "completed_by" = $2, "completed"=$3
+        WHERE "id" = $4;
   `;
-  const dbRes = await pool.query(queryText, [
-    
+  const updateValues = [
+    req.body.task,
+    req.body.completed_by,
     req.body.completed,
-    taskToUpdate
-  ])
-  if(dbRes.rows.length === 0){
-    res.sendStatus(404)
-    return;
-  } else{
-    res.send(dbRes.rows[0])
-  } 
-}catch(err){
-  console.log('error in put ', err.message)
-  res.sendStatus(500)
-}
-    
+  ];
+  pool.query(updateQuery, updateValues)
+  .then((res) => {
+      res.sendStatus(201);
+  }).catch((error) => {
+  console.error('error in tasks PUT route', error);
+  res.sendStatus(500);
 });
+});
+
+
 
 
 module.exports = router;

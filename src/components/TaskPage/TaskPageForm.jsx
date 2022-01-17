@@ -52,9 +52,7 @@ function TaskPageForm() {
    const [completedBy, setCompletedBy] = useState('');
    const [completed, setCompleted] = useState('');
    
-   const handleChange = (event) => {
-    setCompleted(event.target.value);
-  };
+ 
 
 
   console.log('This is tasks STORE', tasks); //working
@@ -85,12 +83,7 @@ function TaskPageForm() {
     //  }
    }
 
-   //console.log('This Clients Tasks Are:', thisTask(tasks));
-  
-
-  
-
-
+ 
   const onAddTask= (event) => {
     event.preventDefault();
     dispatch({
@@ -109,41 +102,34 @@ function TaskPageForm() {
   }
 
 
-  const deleteTask = (taskID, clientID)  => {
-    console.log('inside deleteTask function, taskId is:', taskID)
-    console.log('inside deleteTask function, oneClient is:', clientID)
-    dispatch({
-      type: 'DELETE_TASK',
-      payload: {
-        oneTask: taskID,
-        oneClient: clientID
-      }
-    })
-    thisTask(tasks);
-    // console.log('DELETEtask function thisTask(tasks) is:', );
-  }
-
-  //  LOCAL
-  //  const [completed, setCompleted] = useState('');
-  //  const markCompleted = () => {
-  //    dispatch ({
-  //     type: 'SET_TASKS', 
-  //     payload: completed
-  //    })
-  //    setCompleted('')
-  //  }
-  function onEdit (task){
-    console.log(task.id, 'this is the task id')
+  function onEdit (tasks){
+    console.log(tasks.id, 'this is the task id onEdit')
  dispatch({
     type: 'FETCH_THIS_TASK_TO_EDIT',
-    payload: task.id
+    payload: tasks.id
   })
     history.push('/add_new_tasks')
   }
 
 
 
-//const currentlyEditing = editIdx === i;
+
+
+
+//------------------------------------------------------------------------------------
+  const deleteTask = (taskID)  => {
+    console.log('inside deleteTask function, taskId is:', taskID)
+    console.log('inside deleteTask function, oneClient is:', oneClient)
+    dispatch({
+      type: 'DELETE_TASK',
+      payload: {
+        oneTask: taskID,
+        oneClient: oneClient
+      }
+    })
+    // console.log('DELETEtask function thisTask(tasks) is:', );
+  }
+//------------------------------------------------------------------------------------
 
 
 
@@ -164,35 +150,29 @@ function TaskPageForm() {
         </TableRow>
 
       </TableHead>
-
-
         <TableBody>
           {oneTask.map((tasks) => {
             console.log('inside MAP', tasks)
                   return ( 
-                      <TableRow
-                        key={tasks.id} 
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                      >
-                        {/* <TableCell component="th" scope="row">
-                          {tasks.task}
-                        </TableCell>   */}
+                      <TableRow key={tasks.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell align="right">{tasks.task}</TableCell>
                             <TableCell align="right">{tasks.completed_by}</TableCell>
                             <TableCell align="right">{tasks.completed}</TableCell>
+
                             <TableCell>
                                 <Stack direction="column" alignItems="flex-end" key={tasks.id}>
                                     <Chip
                                       label=""
                                       onClick={() => { deleteTask(tasks.id) }}
-                                      onDelete={deleteTask}
+                                      // onDelete={deleteTask}
                                       deleteIcon={<DeleteIcon />}
                                       variant="outlined"
                                     />
                               </Stack>
                           </TableCell>
+
                           <TableCell>
-                          <EditIcon  onClick={() => startEditing(i) }/>
+                          <EditIcon onClick={(event) => onEdit(event) }/>
                           </TableCell>
 
                       </TableRow>
@@ -216,29 +196,20 @@ function TaskPageForm() {
 
 
 
-
-{/* 
-<label for="completed">Is this Task Completed?</label>
-
-<select onChange={(event) => setCompleted(event.target.value)}>
-        <option value="Y">Yes</option>
-        <option value="N">No</option>
-</select> */}
-
 <Box>
-      <FormControl sx={{ m: 1, minWidth: 135 }}>
-        <InputLabel id="demo-simple-select-label">Completed?</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={completed}
-          label="Completed  ?"
-          onChange={(event) => setCompleted(event.target.value)}>
+  <FormControl sx={{ m: 1, minWidth: 135 }}>
+    <InputLabel id="demo-simple-select-label">Completed?</InputLabel>
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={completed}
+        label="Completed  ?"
+        onChange={(event) => setCompleted(event.target.value)}>
           <MenuItem value="N">No</MenuItem>
           <MenuItem value="Y">Yes</MenuItem>
         </Select>
-      </FormControl>
-    </Box>
+  </FormControl>
+</Box>
 
 
 
