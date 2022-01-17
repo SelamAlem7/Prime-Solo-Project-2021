@@ -53,7 +53,7 @@ function* fetchThisTask(action) {
     })
     yield put({ 
       type: 'FETCH_THIS_ONE_TASK',
-      payload: action.payload.oneClient //action.payload.oneClient
+      payload: action.payload.oneClient//action.payload.oneClient
          })
   }
 

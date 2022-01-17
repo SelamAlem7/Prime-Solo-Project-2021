@@ -4,6 +4,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+
 // This is one of our simplest components
 // It doesn't have local state
 // It doesn't dispatch any redux actions or display any part of redux state
@@ -29,21 +32,24 @@ function InfoPage() {
       <ul>
         {client.map((client) => {
         return (
-          <li key={client.id}> {client.user_id === user.id && client.name }
-        
-        
-        <button
-          type="button"
-          onClick={() => {
-            history.push('/add_new_client');
-          }}>
-          Edit
-        </button>
+          // <li key={client.id}> {client.user_id === user.id && client.name }
+          // <button
+          // type="button"
+          // onClick={() => {
+          //   history.push('/add_new_client');
+          // }}>
+          // Edit
+          // </button>
+          // </li> 
+           
+        <Stack direction="row" spacing={2} sx={{ '& button': { m: 1 } }} >
+          <Button variant="outlined" size="large" variant="contained"> {client.name}</Button>
+        </Stack>
 
-
-        </li> 
         )
-      })}
+     
+     
+     })}
       </ul>
 
 

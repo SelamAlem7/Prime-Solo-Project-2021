@@ -1,6 +1,7 @@
 .taskButton{
-    background-color: #c5d3f1; /* Green */
-    border: none;
+    background-color: #b8ccf8; /* Green */
+    
+    
     color: white;
     padding: 15px 32px;
     text-align: center;
@@ -9,4 +10,14 @@
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+.taskButton:hover {
+     box-shadow: hsla(0, 49%, 63%, 0) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px, rgba(0, 0, 0, .1) 0 10px 13px;
+  transform: scale(1.08);
+}
+
+@media (min-width: 768px) {
+  .taskButton {
+    padding: 16px 48px;
+  }
 }

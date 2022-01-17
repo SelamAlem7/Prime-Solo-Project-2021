@@ -19,6 +19,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
+
+
+
 function TaskPageForm() {
       // on page load:
       useEffect(() => {
@@ -94,14 +97,14 @@ function TaskPageForm() {
   }
 
 
-  const deleteTask = (oneTask, oneClient)  => {
-    console.log('inside deleteTask function, taskId is:', oneTask)
-    console.log('inside deleteTask function, oneClient is:', oneClient)
+  const deleteTask = (taskID, clientID)  => {
+    console.log('inside deleteTask function, taskId is:', taskID)
+    console.log('inside deleteTask function, oneClient is:', clientID)
     dispatch({
       type: 'DELETE_TASK',
       payload: {
-        oneTask: oneTask,
-        oneClient: oneClient
+        oneTask: taskID,
+        oneClient: clientID
       }
     })
     thisTask(tasks);
@@ -129,50 +132,45 @@ function TaskPageForm() {
   return(
     <div>
 
-<TableContainer component={Paper}>
-      <Table sx={{ minWidth: 150 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="right"> <Typography variant="h6"> TASKS </Typography></TableCell>
-            <TableCell align="right"> <Typography variant="h6"> ASSIGNED STAFF </Typography> </TableCell>
-            <TableCell align="right"> <Typography variant="h6"> COMPLETED STATUS </Typography></TableCell>
-            <TableCell align="right"> <Typography variant="h6"> DELETE </Typography></TableCell> 
-          </TableRow>
-        </TableHead>
+
+  <TableContainer component={Paper} >
+    <Table sx={{ minWidth: 150 }} aria-label="simple table">
+      <TableHead>
+        <TableRow>
+          <TableCell align="right"> <Typography variant="h6"> TASKS </Typography></TableCell>
+          <TableCell align="right"> <Typography variant="h6"> ASSIGNED STAFF </Typography> </TableCell>
+          <TableCell align="right"> <Typography variant="h6"> COMPLETED STATUS </Typography></TableCell>
+          <TableCell align="right"> <Typography variant="h6"> DELETE </Typography></TableCell> 
+        </TableRow>
+      </TableHead>
         <TableBody>
           {oneTask.map((tasks) => {
             console.log('inside MAP', tasks)
-            return (
-
-            
-            <TableRow
-              key={tasks.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              {/* <TableCell component="th" scope="row">
-                {tasks.task}
-              </TableCell>   */}
-              <TableCell align="right">{tasks.task}</TableCell>
-              <TableCell align="right">{tasks.completed_by}</TableCell>
-              <TableCell align="right">{tasks.completed}</TableCell>
-              
-              
-              <TableCell>
-              <Stack direction="column" alignItems="flex-end" key={tasks.id}>
-                    <Chip
-                      label=""
-                      onClick={() => { deleteTask(tasks.id) }}
-                      onDelete={deleteTask}
-                      deleteIcon={<DeleteIcon />}
-                      variant="outlined"
-                    />
-            </Stack>
-            </TableCell>
-            </TableRow>
-            )})}
-        </TableBody>
-
-
+                  return ( 
+                      <TableRow
+                        key={tasks.id}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      >
+                        {/* <TableCell component="th" scope="row">
+                          {tasks.task}
+                        </TableCell>   */}
+                            <TableCell align="right">{tasks.task}</TableCell>
+                            <TableCell align="right">{tasks.completed_by}</TableCell>
+                            <TableCell align="right">{tasks.completed}</TableCell>
+                            <TableCell>
+                                <Stack direction="column" alignItems="flex-end" key={tasks.id}>
+                                    <Chip
+                                      label=""
+                                      onClick={() => { deleteTask(tasks.id) }}
+                                      onDelete={deleteTask}
+                                      deleteIcon={<DeleteIcon />}
+                                      variant="outlined"
+                                    />
+                              </Stack>
+                          </TableCell>
+                      </TableRow>
+                  )})}
+              </TableBody>
       </Table>
     </TableContainer>
  

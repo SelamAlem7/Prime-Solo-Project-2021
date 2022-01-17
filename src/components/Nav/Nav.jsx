@@ -7,6 +7,7 @@ import logo from './careTeamLogo.jpeg';
 
 
 
+
 function Nav() {
   const user = useSelector((store) => store.user);
 
@@ -33,19 +34,19 @@ function Nav() {
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
-            <Link className="navLink" to="/user">
+            <Link className="navLink" role="button" to="/user">
               Home
             </Link>
 
-            <Link className="navLink" to="/our_clients">
+            <Link className="navLink" role="button" to="/our_clients">
               Your Clients
             </Link>
 
-            <LogOutButton className="navLink" />
+            <LogOutButton className="navLink" role="button"/>
           </>
         )}
 
-        <Link className="navLink" to="/about">
+        <Link className="navLink" role="button" to="/about">
           About
         </Link>
         
