@@ -106,7 +106,7 @@ pool.query(query, sqlValues)
 // Update an item if it's something the logged in user added
 router.put('/:id', (req, res) => {
   // console.log('req.params', req.params);
-  console.log('req.body', req.body);
+  console.log('PUT route req.body is:', req.params);
   
   //const taskToUpdate = req.body.id;
   const updateQuery = `
@@ -115,9 +115,10 @@ router.put('/:id', (req, res) => {
         WHERE "id" = $4;
   `;
   const updateValues = [
-    req.body.task,
-    req.body.completed_by,
-    req.body.completed,
+    req.params.task,
+    req.params.completed_by,
+    req.params.completed,
+    req.params.id
   ];
   pool.query(updateQuery, updateValues)
   .then((res) => {

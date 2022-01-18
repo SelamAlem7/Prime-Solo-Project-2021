@@ -23,7 +23,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import swal from 'sweetalert';
-
+import { createTheme } from '@mui/material/styles';
 
 
 
@@ -89,7 +89,7 @@ function TaskPageForm() {
    }
 
  
-  const onAddTask= (event) => {
+  const onAddTask= () => {
     //event.preventDefault();
     dispatch({
       type: 'ADD_TASKS',
@@ -100,43 +100,31 @@ function TaskPageForm() {
         client_id: oneClient
       }
     });
-
-    swal(`Task has been saved!`, { icon: 'success'});
-  
+    
     setNewTask('');
     setCompleted('');
     setCompletedBy('');
+    swal(`Task has been saved!`, { icon: 'success'});
+    dispatch({
+      type: 'FETCH_TASKS'
+    });
     history.push('/tasks')
   }
 
 
-  function onEdit (tasks){
-    console.log('this is the task id onEdit', tasks.id )
+
+
+  function onEdit (task){
+    console.log('this is the task id onEdit', task )
  dispatch({
     type: 'FETCH_THIS_TASK_TO_EDIT',
-    payload: params.id
+    payload: {oneTask: task}
   })
-    history.push(`/edit_task/${params.id}`)
+    history.push('/edit_task')
   }
 
 
 
-
-
-
-  // const deleteTask = (taskID)  => {
-  //   console.log('inside deleteTask function, taskId is:', taskID)
-  //   console.log('inside deleteTask function, oneClient is:', oneClient)
-  //   dispatch({
-  //     type: 'DELETE_TASK',
-  //     payload: {
-  //       oneTask: taskID,
-  //       oneClient: oneClient
-  //     }
-  //   })
-  // }
-
-  
   const deleteTask = (taskID) => {
     swal({
       title: `Are you sure you want to delete?`,
@@ -152,9 +140,7 @@ function TaskPageForm() {
             oneClient: oneClient
           }
         })
-
         swal(`Task has been deleted`,  { icon: 'success' })
-       
     }
     })
   }
@@ -164,17 +150,63 @@ function TaskPageForm() {
   return(
     <div>
 
+<form>
+  <h3 className="enterTask">Enter A New Task:</h3>
+<TextField id="outlined-basic" className="taskBox"
+            placeholder="Enter a Task..." value={newTask} sx={{marginLeft: 2, backgroundColor: "#fce4ec",height: 55, marginTop: 3}}
+            onChange={(event) => setNewTask(event.target.value)} />
 
-  <TableContainer component={Paper} editable={true}>
-    <Table sx={{ minWidth: 150 }} aria-label="simple table">
+
+<TextField id="outlined-basic"   className="staffBox"
+            sx={{marginLeft: 5, backgroundColor: "#fce4ec",height: 55, marginTop: 3}}
+            required="required" placeholder="Team Member's Name" value={completedBy}
+            onChange={(event) => setCompletedBy(event.target.value)} />
+
+
+<Box sx={{ minWidth: 115 }} className="completedBox" >
+  <FormControl sx={{ minWidth: 155,  marginLeft: 60, marginBottom: -4, backgroundColor: "#fce4ec", marginTop: -7}}  >
+    <InputLabel sx={{ marginLeft: 2, marginTop: -0}} id="demo-simple-select-label" >Completed ?</InputLabel>
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        sx={{height: 55}}
+        value={completed}
+        label="Completed ?"
+        onChange={(event) => setCompleted(event.target.value)}>
+          <MenuItem value="N">No</MenuItem>
+          <MenuItem value="Y">Yes</MenuItem>
+        </Select>
+  </FormControl>
+</Box>
+</form>
+
+<Button 
+variant="outlined"
+ style={{
+  backgroundColor: "#4caf50",
+  height: 55,
+  color: "white",
+  marginLeft: 800,
+  marginTop: -80,
+  marginBottom: 35,
+  marginLeft: 677
+}}
+        
+onClick={(event) => { onAddTask(event) }}>Add Task</Button>
+
+
+
+
+  <TableContainer component={Paper}>
+    <Table sx={{ minWidth: 150, fontSize: 10, backgroundColor:'#ffcdd2', marginBottom: 10 }} aria-label="simple table">
       <TableHead>
 
         <TableRow>
-          <TableCell align="right"> <Typography variant="h6"> TASKS </Typography></TableCell>
+          <TableCell align="left"> <Typography variant="h6" > TASKS </Typography></TableCell>
           <TableCell align="right"> <Typography variant="h6"> ASSIGNED STAFF </Typography> </TableCell>
           <TableCell align="right"> <Typography variant="h6"> COMPLETED STATUS </Typography></TableCell>
           <TableCell align="right"> <Typography variant="h6"> DELETE </Typography></TableCell> 
-          <TableCell align="right"> <Typography variant="h6"> EDIT </Typography></TableCell> 
+          <TableCell align="right"> <Typography variant="h6" style={{  marginRight: 60 }}> EDIT </Typography></TableCell> 
         </TableRow>
 
       </TableHead>
@@ -183,22 +215,21 @@ function TaskPageForm() {
             console.log('inside MAP', tasks)
                   return ( 
                       <TableRow key={tasks.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                            <TableCell align="right">{tasks.task}</TableCell>
-                            <TableCell align="right">{tasks.completed_by}</TableCell>
-                            <TableCell align="right">{tasks.completed}</TableCell>
+                            <TableCell align="left">{tasks.task}</TableCell>
+                            <TableCell align="center">{tasks.completed_by}</TableCell>
+                            <TableCell align="center">{tasks.completed}</TableCell>
 
                             <TableCell>
-                                <Stack direction="column" alignItems="flex-end" key={tasks.id}>
+                                <Stack direction="column"alignItems="flex-end" key={tasks.id}>
                                     <Chip
-                                      label=""
                                       onDelete={() => { deleteTask(tasks.id) }}
-                                      deleteIcon={<DeleteIcon />}
+                                      deleteIcon={<DeleteIcon style={{ color: "#ba000d", marginRight: 30 }}  />}
                                     />
                               </Stack>
                           </TableCell>
 
                           <TableCell>
-                          <EditIcon onClick={() => onEdit(tasks.id) }/>
+                          <EditIcon onClick={() => onEdit(tasks) } style={{  marginLeft: 100 }}/>
                           </TableCell>
 
                       </TableRow>
@@ -209,46 +240,10 @@ function TaskPageForm() {
  
 
 
-<form>
-
-<TextField id="outlined-basic" label="New Task" variant="standard" className="taskBox"
-            placeholder="Enter a Task..." value={newTask}
-            onChange={(event) => setNewTask(event.target.value)} />
-
-
-<TextField id="outlined-basic" label="Team Member" variant="standard" className="staffBox"
-            required="required" placeholder="Team Member's Name..." value={completedBy}
-            onChange={(event) => setCompletedBy(event.target.value)} />
-
-
-<Box sx={{ minWidth: 120 }} className="completedBox" >
-  <FormControl sx={{ m: 1, minWidth: 135 }}  >
-    <InputLabel id="demo-simple-select-label">Completed?</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={completed}
-        label="Completed ?"
-        onChange={(event) => setCompleted(event.target.value)}>
-          <MenuItem value="N">No</MenuItem>
-          <MenuItem value="Y">Yes</MenuItem>
-        </Select>
-  </FormControl>
-</Box>
-
-
-
-
-
-
-</form>
-<Button variant="contained" onClick={(event) => { onAddTask(event) }}>Add Task</Button>
-<Button variant="contained" onClick={() => {history.goBack()}}>Back to Clients</Button>
-
 
 </div>
     
-//need to have a 2nd reducer that is in charge of holding just one client 
+
 
   )
 

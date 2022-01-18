@@ -11,7 +11,7 @@ function* fetchThisTaskToEdit(action) {
       yield put({ 
         type: 'SET_EDIT_TASK', 
         payload: response.data
-      }); //this works and grabs the client 
+      }); 
     } catch(error) { console.log('fetch This EDIT task', error)}  
 
 }

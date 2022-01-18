@@ -91,7 +91,7 @@ function App() {
           <ProtectedRoute
             // logged in shows ClientPage else shows LoginPage
             exact
-            path="/edit_task/:id"
+            path="/edit_task" ///edit_task/:id"
           >
             <TaskPageEdit/>
           </ProtectedRoute>

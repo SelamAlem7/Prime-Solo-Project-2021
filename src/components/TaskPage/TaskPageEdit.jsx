@@ -36,11 +36,11 @@ function TaskPageEdit() {
 
 //   on page load:
    useEffect(() => {
-    console.log('inside TASKPAGEEDIT params.id:', params.id)
     dispatch({
-      type: 'FETCH_THIS_TASK',
-      payload: params.id
+      type: 'FETCH_THIS_TASK_TO_EDIT',
+      payload: {oneTask: taskID}
     })
+   
      
  }, [])
 
@@ -52,17 +52,27 @@ function TaskPageEdit() {
 
 
   return(
-    <div>
+    <div> 
+      
     <h1> Task to Edit </h1>
     
-    <h3> {oneTask.task} </h3>
+    <p> {oneTask} </p> 
        
-        <p>  </p>
+        
      
-   {/* <input/>  */}
+   <input placeholder="Enter new Task"/> 
    </div>
-  )
-};
+
+
+
+
+
+
+
+
+  )//end return 
+
+}; //end TaskPageEdit function
 
 
 

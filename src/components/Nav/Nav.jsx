@@ -38,7 +38,7 @@ function Nav() {
               Home
             </Link>
 
-            <Link className="navLink" role="button" to="/our_clients">
+            <Link className="navLink" role="button" to="/add_new_client">
               Your Clients
             </Link>
 
