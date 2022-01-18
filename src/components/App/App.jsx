@@ -21,7 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ClientPageForm from '../ClientPage/ClientPageForm';
 import TaskPageForm from '../TaskPage/TaskPageForm';
-import AddNewTask from '../TaskPage/AddNewTask';
+import TaskPageEdit from '../TaskPage/TaskPageEdit';
 //import TaskEditPage from '../TaskPage/TaskEditPage';
 import './App.css';
 
@@ -91,9 +91,9 @@ function App() {
           <ProtectedRoute
             // logged in shows ClientPage else shows LoginPage
             exact
-            path="/add_new_tasks"
+            path="/edit_task/:id"
           >
-            <AddNewTask/>
+            <TaskPageEdit/>
           </ProtectedRoute>
 
 

@@ -31,6 +31,7 @@ router.get('/', (req, res) => {
   // Pass in the req.params.id to select a client
 //Getting tasks by client_id:
 router.get('/:id', (req, res) => {
+  console.log('req.parmas is:', req.params)
   const selectedTask = req.params.id;
   //we will then get all movies with details and genre included using JOIN query
   const sqlText = `
@@ -46,6 +47,7 @@ router.get('/:id', (req, res) => {
     res.sendStatus(500)
   })
 });
+
 
 
 
@@ -104,7 +106,7 @@ pool.query(query, sqlValues)
 // Update an item if it's something the logged in user added
 router.put('/:id', (req, res) => {
   // console.log('req.params', req.params);
-  // console.log('req.body', req.body);
+  console.log('req.body', req.body);
   
   //const taskToUpdate = req.body.id;
   const updateQuery = `

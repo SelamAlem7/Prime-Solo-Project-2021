@@ -4,8 +4,9 @@ import axios from 'axios';
 
 // Get the specified task to edit
 function* fetchThisTaskToEdit(action) {
+  console.log('Inside EDIT saga:', action.payload);
   try {
-      const response = yield axios.put(`/api/tasks/`,action.payload)
+      const response = yield axios.put(`/api/tasks/${action.payload}`)
       console.log('Inside EDIT saga:', action.payload);
       yield put({ 
         type: 'SET_EDIT_TASK', 

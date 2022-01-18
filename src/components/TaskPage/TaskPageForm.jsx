@@ -41,12 +41,14 @@ function TaskPageForm() {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  const params = useParams();
 
    // REDUX REDUCER
    const tasks = useSelector((store) => store.tasks)
    const client = useSelector((store) => store.client)
    const oneClient = useSelector((store) => store.oneClient)
    const oneTask = useSelector((store) => store.oneTask)
+
 
    const [newTask, setNewTask] = useState('');
    const [completedBy, setCompletedBy] = useState('');
@@ -85,7 +87,7 @@ function TaskPageForm() {
 
  
   const onAddTask= (event) => {
-    event.preventDefault();
+    //event.preventDefault();
     dispatch({
       type: 'ADD_TASKS',
       payload: {
@@ -95,20 +97,20 @@ function TaskPageForm() {
         client_id: oneClient
       }
     })
-    thisTask(tasks);
     setNewTask('');
     setCompleted('');
     setCompletedBy('');
+    history.push('/tasks')
   }
 
 
   function onEdit (tasks){
-    console.log(tasks.id, 'this is the task id onEdit')
+    console.log('this is the task id onEdit', tasks.id )
  dispatch({
     type: 'FETCH_THIS_TASK_TO_EDIT',
-    payload: tasks.id
+    payload: params.id
   })
-    history.push('/add_new_tasks')
+    history.push(`/edit_task/${params.id}`)
   }
 
 
@@ -116,7 +118,6 @@ function TaskPageForm() {
 
 
 
-//------------------------------------------------------------------------------------
   const deleteTask = (taskID)  => {
     console.log('inside deleteTask function, taskId is:', taskID)
     console.log('inside deleteTask function, oneClient is:', oneClient)
@@ -129,7 +130,6 @@ function TaskPageForm() {
     })
     // console.log('DELETEtask function thisTask(tasks) is:', );
   }
-//------------------------------------------------------------------------------------
 
 
 
@@ -163,8 +163,7 @@ function TaskPageForm() {
                                 <Stack direction="column" alignItems="flex-end" key={tasks.id}>
                                     <Chip
                                       label=""
-                                      onClick={() => { deleteTask(tasks.id) }}
-                                      // onDelete={deleteTask}
+                                      onDelete={() => { deleteTask(tasks.id) }}
                                       deleteIcon={<DeleteIcon />}
                                       variant="outlined"
                                     />
@@ -172,7 +171,7 @@ function TaskPageForm() {
                           </TableCell>
 
                           <TableCell>
-                          <EditIcon onClick={(event) => onEdit(event) }/>
+                          <EditIcon onClick={() => onEdit(tasks.id) }/>
                           </TableCell>
 
                       </TableRow>
@@ -185,25 +184,24 @@ function TaskPageForm() {
 
 <form>
 
-<TextField id="outlined-basic" label="New Task" variant="standard" 
+<TextField id="outlined-basic" label="New Task" variant="standard" className="taskBox"
             placeholder="Enter a Task..." value={newTask}
             onChange={(event) => setNewTask(event.target.value)} />
 
 
-<TextField id="outlined-basic" label="Team Member" variant="standard" 
+<TextField id="outlined-basic" label="Team Member" variant="standard" className="staffBox"
             required="required" placeholder="Team Member's Name..." value={completedBy}
             onChange={(event) => setCompletedBy(event.target.value)} />
 
 
-
-<Box>
-  <FormControl sx={{ m: 1, minWidth: 135 }}>
+<Box sx={{ minWidth: 120 }} className="completedBox" >
+  <FormControl sx={{ m: 1, minWidth: 135 }}  >
     <InputLabel id="demo-simple-select-label">Completed?</InputLabel>
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         value={completed}
-        label="Completed  ?"
+        label="Completed ?"
         onChange={(event) => setCompleted(event.target.value)}>
           <MenuItem value="N">No</MenuItem>
           <MenuItem value="Y">Yes</MenuItem>
@@ -214,11 +212,10 @@ function TaskPageForm() {
 
 
 
-<Button variant="contained" onClick={(event) => { onAddTask(event) }}>Add Task</Button>
 
 
 </form>
-
+<Button variant="contained" onClick={(event) => { onAddTask(event) }}>Add Task</Button>
 <Button variant="contained" onClick={() => {history.goBack()}}>Back to Clients</Button>
 
 
