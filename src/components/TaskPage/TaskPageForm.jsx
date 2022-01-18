@@ -22,6 +22,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
+import swal from 'sweetalert';
+
 
 
 
@@ -42,6 +44,7 @@ function TaskPageForm() {
   const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams();
+  
 
    // REDUX REDUCER
    const tasks = useSelector((store) => store.tasks)
@@ -96,7 +99,10 @@ function TaskPageForm() {
         completed: completed,
         client_id: oneClient
       }
-    })
+    });
+
+    swal(`Task has been saved!`, { icon: 'success'});
+  
     setNewTask('');
     setCompleted('');
     setCompletedBy('');
@@ -118,17 +124,39 @@ function TaskPageForm() {
 
 
 
-  const deleteTask = (taskID)  => {
-    console.log('inside deleteTask function, taskId is:', taskID)
-    console.log('inside deleteTask function, oneClient is:', oneClient)
-    dispatch({
-      type: 'DELETE_TASK',
-      payload: {
-        oneTask: taskID,
-        oneClient: oneClient
-      }
+  // const deleteTask = (taskID)  => {
+  //   console.log('inside deleteTask function, taskId is:', taskID)
+  //   console.log('inside deleteTask function, oneClient is:', oneClient)
+  //   dispatch({
+  //     type: 'DELETE_TASK',
+  //     payload: {
+  //       oneTask: taskID,
+  //       oneClient: oneClient
+  //     }
+  //   })
+  // }
+
+  
+  const deleteTask = (taskID) => {
+    swal({
+      title: `Are you sure you want to delete?`,
+      icon: 'error',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete)=> {
+      if(willDelete){
+        dispatch({
+          type: 'DELETE_TASK',
+          payload: {
+            oneTask: taskID,
+            oneClient: oneClient
+          }
+        })
+
+        swal(`Task has been deleted`,  { icon: 'success' })
+       
+    }
     })
-    // console.log('DELETEtask function thisTask(tasks) is:', );
   }
 
 
@@ -165,7 +193,6 @@ function TaskPageForm() {
                                       label=""
                                       onDelete={() => { deleteTask(tasks.id) }}
                                       deleteIcon={<DeleteIcon />}
-                                      variant="outlined"
                                     />
                               </Stack>
                           </TableCell>
