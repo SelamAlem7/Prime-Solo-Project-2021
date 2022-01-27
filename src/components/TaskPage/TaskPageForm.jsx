@@ -175,7 +175,7 @@ function TaskPageForm() {
         onChange={(event) => setCompleted(event.target.value)}>
           <MenuItem value="N">No</MenuItem>
           <MenuItem value="Y">Yes</MenuItem>
-        </Select>
+      </Select>
   </FormControl>
 </Box>
 </form>
@@ -245,12 +245,12 @@ onClick={(event) => { onAddTask(event) }}>Add Task</Button>
     
 
 
-  )
+  )//end return
 
 
 
 
-};
+}; //end TaskPageForm***
 
 
 

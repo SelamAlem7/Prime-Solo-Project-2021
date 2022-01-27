@@ -102,7 +102,7 @@ function ClientPageForm() {
           marginTop: 20,
           marginLeft: 5,
           marginBottom: 8}} 
-          onClick={(event) => { onAddTask(event) }}>Add New Client
+          onClick={(event) => { onAddClient(event) }}>Add New Client
       </Button>
             </form>
 
@@ -132,32 +132,24 @@ function ClientPageForm() {
           <TableCell align="left"> <Typography variant="h6" > LIST OF CLIENTS </Typography></TableCell>
           <TableCell align="left"> <Typography variant="h6" > DELETE CLIENT </Typography></TableCell>
         </TableRow>
-
       </TableHead>
-        <TableBody >
+
+      <TableBody >
         {client.map((clientInfo) => {
                 return (
                       <TableRow key={clientInfo.id}  sx={{ border: 2,  }}>
                             <TableCell align="left">{clientInfo.name} </TableCell>
-                          
-
                             <TableCell>
                                 <Stack key={clientInfo.id}>
                                     <Chip
-                                    sx={{ marginRight: 30  }}
                                       onDelete={() => { deleteClient(clientInfo.id) }}
-                                      deleteIcon={<DeleteIcon style={{ color: "#ba000d"}}  />}
+                                      deleteIcon={<DeleteIcon style={{ color: "#ba000d",  marginRight: 150 }}  />}
                                     />
                               </Stack>
                           </TableCell>
-
-                          {/* <TableCell>
-                          <EditIcon onClick={() => onEdit(tasks) } style={{  marginLeft: 100 }}/>
-                          </TableCell> */}
-
                       </TableRow>
                   )})}
-              </TableBody>
+          </TableBody>
       </Table>
     </TableContainer>
 
@@ -166,8 +158,8 @@ function ClientPageForm() {
    
    
    
-  <img src={background}  class="pic"/>
-  </div>
+    <img src={background}  class="pic"/>
+    </div>
 
     
 

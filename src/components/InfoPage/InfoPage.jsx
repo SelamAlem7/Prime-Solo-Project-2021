@@ -32,27 +32,13 @@ function InfoPage() {
       <ul>
         {client.map((client) => {
         return (
-          // <li key={client.id}> {client.user_id === user.id && client.name }
-          // <button
-          // type="button"
-          // onClick={() => {
-          //   history.push('/add_new_client');
-          // }}>
-          // Edit
-          // </button>
-          // </li> 
-           
-        <Stack direction="row" spacing={2} sx={{ '& button': { m: 1 } }} >
-          <Button variant="outlined" size="large" variant="contained"> {client.name}</Button>
-        </Stack>
+            <Stack direction="row" spacing={2} sx={{ '& button': { m: 1 } }} >
+              <Button variant="outlined" size="large" variant="contained"> {client.name}</Button>
+            </Stack>
 
-        )
-     
-     
-     })}
+        )})};
       </ul>
-
-
+      
     </div>
   );
 }

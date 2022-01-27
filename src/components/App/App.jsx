@@ -16,13 +16,11 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ClientPageForm from '../ClientPage/ClientPageForm';
 import TaskPageForm from '../TaskPage/TaskPageForm';
 import TaskPageEdit from '../TaskPage/TaskPageEdit';
-//import TaskEditPage from '../TaskPage/TaskEditPage';
 import './App.css';
 
 function App() {
@@ -40,7 +38,7 @@ function App() {
         <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
+          <Redirect exact from="/" to="/user" />
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
@@ -48,7 +46,7 @@ function App() {
             exact
             path="/about"
           >
-            <AboutPage />
+            <UserPage />
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.
@@ -135,8 +133,8 @@ function App() {
               // redirect them to the /user page
               <Redirect to="/user" />
               :
-              // Otherwise, show the Landing page
-              <LandingPage />
+              // Otherwise, show the login page
+              <UserPage />
             }
           </Route>
 
