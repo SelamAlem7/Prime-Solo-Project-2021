@@ -20,7 +20,7 @@ What things you need to install the software and how to install them:
 
 
 
-## Development Link:
+## Deployment Link:
 - [The Care Team](http://the-care-team-app.herokuapp.com/#/user)
 
 
