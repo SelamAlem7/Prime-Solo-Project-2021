@@ -1,6 +1,6 @@
 
 # THE CARE TEAM 
-This is an application that is created to assist a team in caring for multiple individuals. The application allows a user to create a customized task list for more than one client. With this person center approach, I am hoping to maximize ifitiancy and communication between those involved in caring for loved ones.
+This is an application that is created to assist a team in caring for multiple individuals. The application allows a user to create a customized task list for more than one client. With this person center approach, I am hoping to maximize efficiency and communication between those involved in caring for loved ones.
 
 
 
